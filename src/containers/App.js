@@ -1,17 +1,15 @@
-import React, { PropTypes } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import React, { PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-//import Header from '../components/Header'
-//import MainSection from '../components/MainSection'
-//import * as TodoActions from '../actions'
-
-// <Header addTodo={actions.addTodo} />
-// <MainSection todos={todos} actions={actions} />
+import TodoInput from '../components/TodoInput';
+import Inbox from '../components/Inbox';
+import * as TodoActions from '../actions';
 
 const App = ({ todos, actions }) => (
   <div>
-    TODO containter 
+    <TodoInput onSave={actions.addTodo} />
+    <Inbox todos={todos} />
   </div>
 )
 
@@ -25,7 +23,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    actions: bindActionCreators({}, dispatch)
+  actions: bindActionCreators(TodoActions, dispatch)
 })
 
 export default connect(
