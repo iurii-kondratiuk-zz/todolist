@@ -27,7 +27,7 @@ export default class TodoInput extends React.Component {
 			<input
         className="TodoInput"
         type="text"
-        placeholder={'Add a to-do in "Inbox"...'}
+        placeholder={'Add a to-do...'}
         autoFocus="true"
         value={this.state.text}
         onChange={this.handleChange}

@@ -5,8 +5,6 @@ html, body {
 }
 
 #todo-app {
-	box-sizing: border-box;
-	height: 100%;
-	padding: 15px;
-	background-color: #445067;
+	background-color: #414c66;
+  min-height: 100%;
 }

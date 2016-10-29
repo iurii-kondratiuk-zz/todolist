@@ -1,21 +1,22 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import TodoInput from '../components/TodoInput';
+import Header from '../components/Header';
 import Inbox from '../components/Inbox';
+
 import * as TodoActions from '../actions';
 
 const App = ({ todos, actions }) => (
   <div>
-    <TodoInput onSave={actions.addTodo} />
-    <Inbox todos={todos} />
+    <Header title="Inbox" />
+    <Inbox actions={actions} todos={todos} />
   </div>
 );
 
 App.propTypes = {
-  todos: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired
+  todos: React.PropTypes.array.isRequired,
+  actions: React.PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

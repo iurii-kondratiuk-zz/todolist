@@ -1,25 +1,20 @@
 import React from 'react';
 
-import Todo from './Todo';
+import TodoInput from '../components/TodoInput';
+import TodoList from '../components/TodoList';
 
-const Inbox = ({ todos }) => {
-	return (
-		<ul className="Inbox">
-			{
-				todos.map(todo => (
-					<Todo
-						completed={todo.completed}
-						key={todo.index}
-						text={todo.text}
-					/>
-				))
-			}
-		</ul>
-	);
-};
+import './Inbox.css';
+
+const Inbox = ({ todos, actions }) => (
+	<div className="Inbox">
+		<TodoInput onSave={actions.addTodo} />
+	  <TodoList todos={todos} />
+  </div>
+);
 
 Inbox.propTypes = {
-	todos: React.PropTypes.array,
-}
+  todos: React.PropTypes.array.isRequired,
+  actions: React.PropTypes.object.isRequired
+};
 
 export default Inbox;
