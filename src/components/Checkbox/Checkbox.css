@@ -1,0 +1,23 @@
+.Checkbox {
+  cursor: pointer;
+  display: inline-block;
+  border: 1px solid #a9a9a9;
+  border-radius: 2px;
+  height: 15px;
+  margin-right: 10px;
+  margin-bottom: -3px;
+  position: relative;
+  width: 15px;
+}
+
+.Checkbox--checked:after {
+  border-left: 1px solid;
+  border-bottom: 1px solid;
+  content: '';
+  height: 6px;
+  left: 3px;
+  position: absolute;
+  top: 2px;
+  transform: rotate(-45deg);
+  width: 9px;
+}

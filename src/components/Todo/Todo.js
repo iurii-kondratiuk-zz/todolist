@@ -1,4 +1,7 @@
 import React from 'react';
+import classnames from 'classnames';
+
+import Checkbox from '../Checkbox';
 
 import './Todo.css';
 
@@ -10,6 +13,7 @@ class Todo extends React.Component {
 
 	handleCheckboxChange = e => {
 		const { onComplete, todo } = this.props;
+		console.log(todo)
 		onComplete(todo.id);
 	}
 
@@ -17,11 +21,8 @@ class Todo extends React.Component {
 		const { todo } = this.props;
 		console.log('Todo', todo)
 		return (
-			<li className="Todo">
-				<input type="checkbox"
-							 value={todo.completed}
-							 defaultChecked={false}
-							 onChange={this.handleCheckboxChange} />
+			<li className={classnames('Todo', { 'Todo--completed': todo.completed })}>
+				<Checkbox checked={todo.completed} onChange={this.handleCheckboxChange} />
 				<span>{todo.text}</span>
 			</li>
 		);
