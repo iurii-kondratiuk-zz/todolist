@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './TodoInput.css';
+
 export default class TodoInput extends React.Component {
 	static propTypes = {
     onSave: React.PropTypes.func.isRequired,
@@ -23,6 +25,7 @@ export default class TodoInput extends React.Component {
 	render() {
 		return (
 			<input
+        className="TodoInput"
         type="text"
         placeholder={'Add a to-do in "Inbox"...'}
         autoFocus="true"
