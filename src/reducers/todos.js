@@ -17,6 +17,13 @@ export default function todos(state = initialState, action) {
         ...state
       ]
 
+    case types.COMPLETE_TODO:
+      return state.map(todo => (
+        todo.id === action.id
+          ? { ...todo, completed: !todo.completed }
+          : todo
+      ))
+
   	default:
       return state;
   }

@@ -8,7 +8,7 @@ import './Inbox.css';
 const Inbox = ({ todos, actions }) => (
 	<div className="Inbox">
 		<TodoInput onSave={actions.addTodo} />
-	  <TodoList todos={todos} />
+	  <TodoList actions={actions} todos={todos} />
   </div>
 );
 

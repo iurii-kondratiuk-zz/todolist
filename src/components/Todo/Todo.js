@@ -2,16 +2,30 @@ import React from 'react';
 
 import './Todo.css';
 
-const Todo = ({ completed, text }) => (
-	<li className="Todo">
-		<span>{completed}</span>
-		<span>{text}</span>
-	</li>
-);
+class Todo extends React.Component {
+	static propTypes = {
+		todo: React.PropTypes.object,
+		onComplete: React.PropTypes.func,
+	}
 
-Todo.propTypes = {
-	completed: React.PropTypes.bool,
-	text: React.PropTypes.string,
+	handleCheckboxChange = e => {
+		const { onComplete, todo } = this.props;
+		onComplete(todo.id);
+	}
+
+	render() {
+		const { todo } = this.props;
+		console.log('Todo', todo)
+		return (
+			<li className="Todo">
+				<input type="checkbox"
+							 value={todo.completed}
+							 defaultChecked={false}
+							 onChange={this.handleCheckboxChange} />
+				<span>{todo.text}</span>
+			</li>
+		);
+	}
 }
 
 export default Todo;
