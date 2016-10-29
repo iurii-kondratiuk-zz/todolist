@@ -11,22 +11,22 @@ const App = ({ todos, actions }) => (
     <TodoInput onSave={actions.addTodo} />
     <Inbox todos={todos} />
   </div>
-)
+);
 
 App.propTypes = {
   todos: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired
-}
+};
 
 const mapStateToProps = state => ({
   todos: state.todos
-})
+});
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(TodoActions, dispatch)
-})
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App)
+)(App);
