@@ -13,4 +13,11 @@ export const addTodo = text => ({
 export const completeTodo = id => ({
 	type: types.COMPLETE_TODO,
 	id,
-})
+});
+
+export const swapTodos = (sourceIndex, targetIndex) => ({
+	type: types.SWAP_TODOS,
+	sourceIndex,
+	targetIndex,
+});
+

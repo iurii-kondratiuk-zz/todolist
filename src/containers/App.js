@@ -20,7 +20,7 @@ App.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  todos: state.todos
+  todos: state.todos.sort((a, b) => b.index - a.index)
 });
 
 const mapDispatchToProps = dispatch => ({
