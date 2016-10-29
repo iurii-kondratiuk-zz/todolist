@@ -1,7 +1,7 @@
 import React from 'react';
 
-import TodoInput from '../components/TodoInput';
-import TodoList from '../components/TodoList';
+import TodoInput from '../TodoInput';
+import TodoList from '../TodoList';
 
 import './Inbox.css';
 
