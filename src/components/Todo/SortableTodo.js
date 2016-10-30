@@ -6,8 +6,8 @@ import DragHandle from '../DragHandle';
 
 const SortableTodo = ({ onComplete, todo }) => (
   <DragHandle>
-	  <Todo onComplete={onComplete}
-	  			todo={todo} />
+    <Todo onComplete={onComplete}
+          todo={todo} />
   </DragHandle>
 );
 
