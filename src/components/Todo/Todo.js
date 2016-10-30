@@ -9,11 +9,7 @@ const Todo = ({ onComplete, todo }) => (
   <li className={classnames('Todo', { 'Todo--completed': todo.completed })}>
     <Checkbox
     	checked={todo.completed}
-    	onChange={(e) => {
-    		e.stopPropagation()
-    		e.preventDefault()
-	    	onComplete(todo.id)
-	   	}}
+    	onChange={() => onComplete(todo.id)}
 	   />
     <span>{todo.text}</span>
   </li>

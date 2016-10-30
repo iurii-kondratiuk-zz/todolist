@@ -8,6 +8,12 @@ const initialState = {
   uncompleted: [],
 };
 
+const getTodoAndRest = (todos, id) => {
+  const todo = todos.filter(t => t.id === id);
+  const rest = todos.filter(t => t.id !== id);
+  return todo.concat([rest]);
+}
+
 export default function todos(state = initialState, action) {
 
   console.log(action)
@@ -25,19 +31,17 @@ export default function todos(state = initialState, action) {
       }
 
     case types.COMPLETE_TODO:
-      const todo = state.uncompleted.filter(t => t.id === action.id)[0];
-      const rest = state.uncompleted.filter(t => t.id !== action.id);
+      const [uncompletedTodo, uncompletedRest] = getTodoAndRest(state.uncompleted, action.id);
       return {
-        uncompleted: rest,
-        completed: state.completed.concat([{ ...todo, completed: true }]),
+        uncompleted: uncompletedRest,
+        completed: state.completed.concat([{ ...uncompletedTodo, completed: true }]),
       }
 
     case types.UNCOMPLETE_TODO:
-      const todoA = state.completed.filter(t => t.id === action.id)[0];
-      const restA = state.completed.filter(t => t.id !== action.id);
+      const [completedTodo, completedRest] = getTodoAndRest(state.completed, action.id);
       return {
-        completed: restA,
-        uncompleted: state.uncompleted.concat([{ ...todoA, completed: false }]),
+        completed: completedRest,
+        uncompleted: state.uncompleted.concat([{ ...completedTodo, completed: false }]),
       }
 
     case types.SWAP_TODOS:
