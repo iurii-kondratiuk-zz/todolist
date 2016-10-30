@@ -7,20 +7,21 @@ import Inbox from '../components/Inbox';
 
 import * as TodoActions from '../actions';
 
-const App = ({ todos, actions }) => (
+const App = ({ actions, completedTodos, uncompletedTodos }) => (
   <div>
     <Header title="Inbox" />
-    <Inbox actions={actions} todos={todos} />
+    <Inbox actions={actions} completedTodos={completedTodos} uncompletedTodos={uncompletedTodos} />
   </div>
 );
 
 App.propTypes = {
-  todos: React.PropTypes.array.isRequired,
+  completedTodos: React.PropTypes.array.isRequired,
   actions: React.PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
-  todos: state.todos
+const mapStateToProps = state => (console.log(state), {
+  completedTodos: state.todos.completed,
+  uncompletedTodos: state.todos.uncompleted,
 });
 
 const mapDispatchToProps = dispatch => ({

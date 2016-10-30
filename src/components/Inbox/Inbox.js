@@ -1,17 +1,17 @@
 import React from 'react';
 
-import { SortableTodo } from '../Todo';
+import { SortableTodo, Todo } from '../Todo';
 import TodoInput from '../TodoInput';
-import { SortableTodoList } from '../TodoList';
+import { SortableTodoList, TodoList } from '../TodoList';
 
 import './Inbox.css';
 
-const Inbox = ({ todos, actions }) => (
+const Inbox = ({ actions, completedTodos, uncompletedTodos }) => (
   <div className="Inbox">
     <TodoInput onSave={actions.addTodo} />
     <SortableTodoList onSort={actions.swapTodos}>
       {
-        todos.map((todo, index) => (
+        uncompletedTodos.map((todo, index) => (
           <SortableTodo
             index={index}            
             key={index}
@@ -21,11 +21,24 @@ const Inbox = ({ todos, actions }) => (
         ))
       }
     </SortableTodoList>
+    <div />
+    <TodoList>
+      {
+        completedTodos.map((todo, index) => (
+          <Todo
+            index={index}            
+            key={index}
+            onComplete={actions.uncompleteTodo}
+            todo={todo}
+          />
+        ))
+      }
+    </TodoList>
   </div>
 );
 
 Inbox.propTypes = {
-  todos: React.PropTypes.array.isRequired,
+  completedTodos: React.PropTypes.array.isRequired,
   actions: React.PropTypes.object.isRequired
 };
 
