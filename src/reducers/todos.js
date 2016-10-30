@@ -1,18 +1,12 @@
 import * as types from '../constants/ActionTypes';
 import { arrayMove } from 'react-sortable-hoc';
 
-//const initialState = [];
+import { moveAndUpdate } from '../utils';
 
 const initialState = {
   completed: [],
   uncompleted: [],
 };
-
-const getTodoAndRest = (todos, id) => {
-  const todo = todos.filter(t => t.id === id);
-  const rest = todos.filter(t => t.id !== id);
-  return todo.concat([rest]);
-}
 
 export default function todos(state = initialState, action) {
 
@@ -31,18 +25,10 @@ export default function todos(state = initialState, action) {
       }
 
     case types.COMPLETE_TODO:
-      const [uncompletedTodo, uncompletedRest] = getTodoAndRest(state.uncompleted, action.id);
-      return {
-        uncompleted: uncompletedRest,
-        completed: state.completed.concat([{ ...uncompletedTodo, completed: true }]),
-      }
+      return moveAndUpdate(state, action.id, 'uncompleted', 'completed', { completed: true });
 
     case types.UNCOMPLETE_TODO:
-      const [completedTodo, completedRest] = getTodoAndRest(state.completed, action.id);
-      return {
-        completed: completedRest,
-        uncompleted: state.uncompleted.concat([{ ...completedTodo, completed: false }]),
-      }
+      return moveAndUpdate(state, action.id, 'completed', 'uncompleted', { completed: false });
 
     case types.SWAP_TODOS:
       return {
