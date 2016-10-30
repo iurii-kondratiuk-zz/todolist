@@ -1,0 +1,14 @@
+.Button {
+	background-color: #4d5b77;
+  border: none;
+  border-radius: 2px;
+  color: #fff;
+  cursor: pointer;
+  height: 22px;
+  outline: none;
+}
+
+.Button[disabled] {
+	cursor: auto;
+	opacity: 0.5;
+}

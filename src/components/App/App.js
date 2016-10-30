@@ -5,7 +5,7 @@ import Inbox from '../Inbox';
 
 import './App.css';
 
-const App = ({ actions }) => (
+const App = () => (
   <div className="App">
     <Header title="Inbox" />
     <Inbox />
