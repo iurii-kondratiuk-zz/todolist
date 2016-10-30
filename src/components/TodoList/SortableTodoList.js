@@ -6,11 +6,9 @@ import TodoList from './TodoList';
 const SortableTodoListWrapper = SortableContainer(TodoList);
 
 const SortableTodoList = ({ children, onSort }) => (
-	<SortableTodoListWrapper
-    distance={1}
-	  onSortEnd={onSort}
-    useDragHandle={true}
-	>
+	<SortableTodoListWrapper distance={1}
+	  											 onSortEnd={onSort}
+    												useDragHandle={true}>
 		{children}
 	</SortableTodoListWrapper>
 );

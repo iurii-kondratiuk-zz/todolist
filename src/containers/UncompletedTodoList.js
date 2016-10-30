@@ -11,12 +11,10 @@ const UnompletedTodoList = ({ actions, todos }) => (
   <SortableTodoList onSort={actions.swapTodos}>
     {
       todos.map((todo, index) => (
-        <SortableTodo
-          index={index}            
-          key={index}
-          onComplete={actions.completeTodo}
-          todo={todo}
-        />
+        <SortableTodo index={index}            
+                      key={index}
+                      onComplete={actions.completeTodo}
+                      todo={todo} />
       ))
     }
   </SortableTodoList>

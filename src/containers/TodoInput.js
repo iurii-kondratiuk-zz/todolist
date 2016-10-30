@@ -8,7 +8,7 @@ import * as TodoActions from '../actions';
 
 const TodoInput = ({ actions }) => (
   <Input onSave={actions.addTodo}
-  			placeholder="Add a to-do..." />
+  			 placeholder="Add a to-do..." />
 );
 
 TodoInput.propTypes = {

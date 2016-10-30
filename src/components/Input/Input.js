@@ -27,15 +27,13 @@ export default class Input extends React.Component {
 
   render() {
     return (
-      <input
-        className="Input"
-        type="text"
-        placeholder={this.props.placeholder}
-        autoFocus="true"
-        value={this.state.text}
-        onChange={this.handleChange}
-        onKeyDown={this.handleKeyDown}
-       />
+      <input className="Input"
+             type="text"
+             placeholder={this.props.placeholder}
+             autoFocus="true"
+             value={this.state.text}
+             onChange={this.handleChange}
+             onKeyDown={this.handleKeyDown} />
     );
   }
 }
