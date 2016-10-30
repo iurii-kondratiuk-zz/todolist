@@ -29,7 +29,7 @@ class CompletedTodoList extends React.Component {
       <div>
         <Button disabled={!todos.length}
                 onClick={this.toggleTodos}
-                text={`${todos.length && showTodos ? 'HIDE' : 'SHOW'} COMPLETED TO-DOs`} />
+                text={`${todos.length && showTodos ? 'HIDE' : 'SHOW'} COMPLETED TO-DOS`} />
         {
           showTodos && (
             <TodoList>
