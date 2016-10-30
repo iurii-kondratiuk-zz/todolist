@@ -1,10 +1,5 @@
-html, body {
+html, body, #todo-app {
 	padding: 0;
 	margin: 0;
 	height: 100%;
-}
-
-#todo-app {
-	background-color: #414c66;
-  min-height: 100%;
 }

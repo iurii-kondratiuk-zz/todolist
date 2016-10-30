@@ -1,10 +1,11 @@
 import React from 'react';
 
-import './TodoInput.css';
+import './Input.css';
 
-export default class TodoInput extends React.Component {
+export default class Input extends React.Component {
   static propTypes = {
-    onSave: React.PropTypes.func.isRequired,
+    onSave: React.PropTypes.func,
+    placeholder: React.PropTypes.string,
   }
 
   state = {
@@ -17,7 +18,9 @@ export default class TodoInput extends React.Component {
 
   handleKeyDown = e => {
     if (e.which === 13) {
-      this.props.onSave(e.target.value);
+      const value = e.target.value.trim();
+      if (!value) return;
+      this.props.onSave(value);
       this.setState({ text: '' });
     }
   }
@@ -25,9 +28,9 @@ export default class TodoInput extends React.Component {
   render() {
     return (
       <input
-        className="TodoInput"
+        className="Input"
         type="text"
-        placeholder={'Add a to-do...'}
+        placeholder={this.props.placeholder}
         autoFocus="true"
         value={this.state.text}
         onChange={this.handleChange}
