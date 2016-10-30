@@ -3,10 +3,10 @@
   display: inline-block;
   border: 1px solid #a9a9a9;
   border-radius: 2px;
-  height: 15px;
+  height: 13px;
   margin-right: 10px;
   position: relative;
-  width: 15px;
+  width: 13px;
 }
 
 .Checkbox--checked:after {
