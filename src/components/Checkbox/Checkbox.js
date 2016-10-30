@@ -5,7 +5,11 @@ import './Checkbox.css';
 
 const Checkbox = ({ checked, onChange }) => (
   <div className={classnames('Checkbox', { 'Checkbox--checked': checked })}
-       onClick={onChange} />
+       onClick={(e) => {
+       	e.stopPropagation()
+    		e.preventDefault()
+       	onChange(e);
+       }} />
 );
 
 

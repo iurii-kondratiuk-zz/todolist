@@ -1,18 +1,21 @@
 import React from 'react';
 import classnames from 'classnames';
-import { SortableElement, SortableHandle } from 'react-sortable-hoc';
 
 import Checkbox from '../Checkbox';
-import DragHandle from '../DragHandle';
 
 import './Todo.css';
 
 const Todo = ({ onComplete, todo }) => (
-  <li className={classnames('Todo', {'Todo--completed': todo.completed })}>
-    <Checkbox checked={todo.completed} onChange={() => onComplete(todo.id)} />
-    <DragHandle>
-    	<span>{todo.text}</span>
-    </DragHandle>
+  <li className={classnames('Todo', { 'Todo--completed': todo.completed })}>
+    <Checkbox
+    	checked={todo.completed}
+    	onChange={(e) => {
+    		e.stopPropagation()
+    		e.preventDefault()
+	    	onComplete(todo.id)
+	   	}}
+	   />
+    <span>{todo.text}</span>
   </li>
 );
 
@@ -21,4 +24,4 @@ Todo.propTypes = {
   todo: React.PropTypes.object,
 };
 
-export default SortableElement(Todo);
+export default Todo;

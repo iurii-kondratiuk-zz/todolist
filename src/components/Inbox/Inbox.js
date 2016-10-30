@@ -1,19 +1,26 @@
 import React from 'react';
 
+import { SortableTodo } from '../Todo';
 import TodoInput from '../TodoInput';
-import TodoList from '../TodoList';
+import { SortableTodoList } from '../TodoList';
 
 import './Inbox.css';
 
 const Inbox = ({ todos, actions }) => (
   <div className="Inbox">
     <TodoInput onSave={actions.addTodo} />
-    <TodoList
-      actions={actions}
-      todos={todos}
-      useDragHandle={true}
-      onSortEnd={actions.swapTodos}
-    />
+    <SortableTodoList onSort={actions.swapTodos}>
+      {
+        todos.map((todo, index) => (
+          <SortableTodo
+            index={index}            
+            key={index}
+            onComplete={actions.completeTodo}
+            todo={todo}
+          />
+        ))
+      }
+    </SortableTodoList>
   </div>
 );
 

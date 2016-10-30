@@ -1,3 +1,7 @@
 import TodoList from './TodoList';
+import SortableTodoList from './SortableTodoList';
 
-export default TodoList;
+export { 
+	TodoList,
+	SortableTodoList
+};

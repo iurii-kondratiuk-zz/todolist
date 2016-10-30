@@ -8,7 +8,7 @@ export const addTodo = text => ({
   text,
 });
 
-export const completeTodo = id => (console.log(id), {
+export const completeTodo = id => ({
   type: types.COMPLETE_TODO,
   id,
 });

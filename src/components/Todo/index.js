@@ -1,3 +1,7 @@
 import Todo from './Todo';
+import SortableTodo from './SortableTodo';
 
-export default Todo;
+export {
+	Todo,
+	SortableTodo,
+};

@@ -1,3 +1,4 @@
 .DragHandle {
 	width: 100%;
+	cursor: move;
 }
