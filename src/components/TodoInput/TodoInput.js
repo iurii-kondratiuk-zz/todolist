@@ -3,28 +3,28 @@ import React from 'react';
 import './TodoInput.css';
 
 export default class TodoInput extends React.Component {
-	static propTypes = {
+  static propTypes = {
     onSave: React.PropTypes.func.isRequired,
   }
 
   state = {
-  	text: '',
+    text: '',
   }
 
   handleChange = e => {
-  	this.setState({ text: e.target.value });
+    this.setState({ text: e.target.value });
   }
 
   handleKeyDown = e => {
-  	if (e.which === 13) {
+    if (e.which === 13) {
       this.props.onSave(e.target.value);
       this.setState({ text: '' });
     }
   }
 
-	render() {
-		return (
-			<input
+  render() {
+    return (
+      <input
         className="TodoInput"
         type="text"
         placeholder={'Add a to-do...'}
@@ -33,6 +33,6 @@ export default class TodoInput extends React.Component {
         onChange={this.handleChange}
         onKeyDown={this.handleKeyDown}
        />
-		);
-	}
+    );
+  }
 }

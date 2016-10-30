@@ -1,4 +1,5 @@
 .Todo {
+  list-style: none;
 	background-color: #fff;
   border: none;
   border-radius: 3px;
@@ -15,4 +16,8 @@
 
 .Todo--completed {
   text-decoration: line-through;
+}
+
+.Todo--isDragging {
+  opacity: 0
 }

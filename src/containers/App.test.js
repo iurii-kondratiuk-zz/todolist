@@ -11,13 +11,13 @@ import reducer from './../reducers';
 const store = createStore(reducer);
 
 describe('<App />', () => {
-	it('renders without crashing', () => {
-	  const div = document.createElement('div');
-	  ReactDOM.render(
-	  	<Provider store={store}>
-		    <App />
-		  </Provider>,
-		  div
-		);
-	});
+  it('renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(
+      <Provider store={store}>
+        <App />
+      </Provider>,
+      div
+    );
+  });
 })

@@ -1,23 +1,21 @@
 import * as types from '../constants/ActionTypes';
 
 let latestTodoId = 0;
-let latestTodoIndex = 0;
 
 export const addTodo = text => ({
   type: types.ADD_TODO,
   id: latestTodoId++,
-  index: latestTodoIndex++,
   text,
 });
 
-export const completeTodo = id => ({
-	type: types.COMPLETE_TODO,
-	id,
+export const completeTodo = id => (console.log(id), {
+  type: types.COMPLETE_TODO,
+  id,
 });
 
-export const swapTodos = (sourceIndex, targetIndex) => ({
-	type: types.SWAP_TODOS,
-	sourceIndex,
-	targetIndex,
+export const swapTodos = ({ oldIndex, newIndex }) => ({
+  type: types.SWAP_TODOS,
+  oldIndex,
+  newIndex,
 });
 

@@ -1,4 +1,5 @@
 import * as types from '../constants/ActionTypes';
+import { arrayMove } from 'react-sortable-hoc';
 
 const initialState = [];
 
@@ -6,7 +7,7 @@ export default function todos(state = initialState, action) {
   console.log(action)
   switch(action.type) {
 
-		case types.ADD_TODO:
+    case types.ADD_TODO:
       return [
         {
           completed: false,
@@ -25,13 +26,9 @@ export default function todos(state = initialState, action) {
       ))
 
     case types.SWAP_TODOS:
-      return state.map(todo => {
-        if (todo.index === action.sourceIndex) return { ...todo, index: action.targetIndex};
-        if (todo.index === action.targetIndex) return { ...todo, index: action.sourceIndex};
-        return todo;
-      })
+      return arrayMove(state, action.oldIndex, action.newIndex);
 
-  	default:
+    default:
       return state;
   }
 };

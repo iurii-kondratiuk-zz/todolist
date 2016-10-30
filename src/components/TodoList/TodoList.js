@@ -1,41 +1,28 @@
 import React from 'react';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import { SortableContainer } from 'react-sortable-hoc';
 
 import Todo from '../Todo';
 
 import './TodoList.css';
 
-class TodoList extends React.Component {
-
-  moveCard(dragIndex, hoverIndex) {
-    console.log(dragIndex, hoverIndex)
-  }
-
-  render() {
-    const { actions, todos } = this.props;
-
-    return  (
-      <ul className="TodoList">
-        {
-          todos.map(todo => (
-            <Todo
-              index={todo.index}
-              key={todo.index}
-              onComplete={actions.completeTodo}
-              todo={todo}
-              moveCard={actions.swapTodos}
-            />
-          ))
-        }
-      </ul>
-    );
-  }
-};
+const TodoList = ({ actions, todos }) => (
+  <ul className="TodoList">
+    {
+      todos.map((todo, index) => (
+        <Todo
+          index={index}            
+          key={index}
+          onComplete={actions.completeTodo}
+          todo={todo}
+        />
+      ))
+    }
+  </ul>
+);
 
 TodoList.propTypes = {
   todos: React.PropTypes.array.isRequired,
   actions: React.PropTypes.object.isRequired
 };
 
-export default DragDropContext(HTML5Backend)(TodoList);
+export default SortableContainer(TodoList);

@@ -4,8 +4,8 @@ import classnames from 'classnames';
 import './Checkbox.css';
 
 const Checkbox = ({ checked, onChange }) => (
-	<div className={classnames('Checkbox', { 'Checkbox--checked': checked })}
-			 onClick={onChange} />
+  <div className={classnames('Checkbox', { 'Checkbox--checked': checked })}
+       onClick={onChange} />
 );
 
 
