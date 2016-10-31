@@ -8,4 +8,10 @@ const Button = ({ disabled, onClick, text }) => (
 					onClick={onClick}>{text}</button>
 );
 
+Button.propTypes = {
+	disabled: React.PropTypes.bool,
+	onClick: React.PropTypes.func,
+	text: React.PropTypes.string,
+};
+
 export default Button;
