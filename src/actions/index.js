@@ -13,10 +13,9 @@ export const completeTodo = id => ({
   id,
 });
 
-export const swapTodos = ({ oldIndex, newIndex }) => ({
+export const swapTodos = (indexes) => ({
   type: types.SWAP_TODOS,
-  oldIndex,
-  newIndex,
+  ...indexes
 });
 
 export const uncompleteTodo = id => ({
