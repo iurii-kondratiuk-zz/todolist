@@ -18,7 +18,7 @@ export default class Input extends React.Component {
 
   handleKeyDown = e => {
     if (e.which === 13) {
-      const value = e.target.value.trim();
+      const value = this.state.text.trim();
       if (!value) return;
       this.props.onSave(value);
       this.setState({ text: '' });
