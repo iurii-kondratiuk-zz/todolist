@@ -3,6 +3,8 @@ import { arrayMove } from 'react-sortable-hoc';
 
 import { moveAndUpdate } from '../utils';
 
+let latestTodoId = 0;
+
 const initialState = {
   completed: [],
   uncompleted: [],
@@ -17,7 +19,7 @@ export default function todos(state = initialState, action) {
         ...state,
         uncompleted: state.uncompleted.concat([{
           completed: false,
-          id: action.id,
+          id: latestTodoId++,
           index: action.index,
           text: action.text,
         }])

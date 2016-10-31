@@ -1,10 +1,7 @@
 import * as types from '../constants/ActionTypes';
 
-let latestTodoId = 0;
-
 export const addTodo = text => ({
   type: types.ADD_TODO,
-  id: latestTodoId++,
   text,
 });
 

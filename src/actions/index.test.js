@@ -6,7 +6,6 @@ describe('actions', () => {
   	const text = 'my first todo';
     const expectedAction = {
       type: types.ADD_TODO,
-    	id: 0,
       text,
     }
     expect(TodoActions.addTodo(text)).toEqual(expectedAction)
