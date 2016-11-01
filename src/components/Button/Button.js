@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import './Button.css';
-
 const Button = ({ disabled, onClick, text }) => (
 	<button
 		disabled={disabled}

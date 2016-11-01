@@ -4,8 +4,6 @@ import TodoInput from '../../containers/TodoInput';
 import CompletedTodoList from '../../containers/CompletedTodoList';
 import UncompletedTodoList from '../../containers/UncompletedTodoList';
 
-import './Inbox.css';
-
 const Inbox = () => (
   <div className="Inbox">
     <TodoInput />

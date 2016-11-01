@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import './Input.css';
-
 export default class Input extends React.Component {
   static propTypes = {
     onSave: PropTypes.func,

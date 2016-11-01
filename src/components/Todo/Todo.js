@@ -3,8 +3,6 @@ import classnames from 'classnames';
 
 import Checkbox from '../Checkbox';
 
-import './Todo.css';
-
 const Todo = ({ onComplete, todo }) => (
   <li className={classnames('Todo', { 'Todo--completed': todo.completed })}>
     <Checkbox
