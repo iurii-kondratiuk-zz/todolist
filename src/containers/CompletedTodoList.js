@@ -41,7 +41,7 @@ class CompletedTodoList extends React.Component {
                 todos.map((todo, index) => (
                   <Todo
                     index={index}            
-                    key={index}
+                    key={todo.id}
                     onComplete={actions.uncompleteTodo}
                     todo={todo}
                   />

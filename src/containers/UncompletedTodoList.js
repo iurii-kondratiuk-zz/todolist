@@ -15,7 +15,7 @@ const UnompletedTodoList = ({ actions, todos }) => (
       todos.map((todo, index) => (
         <SortableTodo
           index={index}            
-          key={index}
+          key={todo.id}
           onComplete={actions.completeTodo}
           todo={todo}
         />
