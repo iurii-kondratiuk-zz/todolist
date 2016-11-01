@@ -5,6 +5,7 @@ const initialState = {
   todosById: {},
   completed: [],
   inbox: [],
+  completedTodosAreVisible: false,
 };
 
 let latestTodoId = 0;
@@ -58,6 +59,12 @@ export default function todos(state = initialState, action) {
         },
         completed: state.completed.filter(id => id !== action.id),
         inbox: [...state.inbox, action.id],
+      }
+
+    case types.TOGGLE_COMPLETED_TODOS:
+      return {
+        ...state,
+        completedTodosAreVisible: !state.completedTodosAreVisible,
       }
 
     case types.SWAP_TODOS:

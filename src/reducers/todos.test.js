@@ -7,6 +7,7 @@ describe('todos reducer', () => {
     todosById: {},
     completed: [],
     inbox: [],
+    completedTodosAreVisible: false,
   };
 
   it('should return the initial state', () => {
@@ -79,6 +80,15 @@ describe('todos reducer', () => {
       },
       completed: [],
       inbox: [1],
+    });
+  });
+
+  it('should handle TOGGLE_COMPLETED_TODOS action', () => {
+    expect(
+      reducer(initialState, { type: types.TOGGLE_COMPLETED_TODOS })
+    ).toEqual({
+      ...initialState,
+      completedTodosAreVisible: true,
     });
   });
 

@@ -19,3 +19,8 @@ export const uncompleteTodo = id => ({
   type: types.UNCOMPLETE_TODO,
   id,
 });
+
+export const toggleCompletedTodos = () => ({
+  type: types.TOGGLE_COMPLETED_TODOS,
+});
+

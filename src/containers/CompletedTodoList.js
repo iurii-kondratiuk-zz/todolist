@@ -17,21 +17,14 @@ class CompletedTodoList extends React.Component {
     actions: PropTypes.object.isRequired,
   }
 
-  state = {
-    showTodos: false,
-  }
-
-  toggleTodos = () => this.setState({ showTodos: !this.state.showTodos });
-
   render() {
-    const { actions, todos } = this.props;
-    const { showTodos } = this.state;
-    
+    const { actions, showTodos, todos } = this.props;
+
     return (
       <div>
         <Button
           disabled={!todos.length}
-          onClick={this.toggleTodos}
+          onClick={actions.toggleCompletedTodos}
           text={`${!!todos.length && showTodos ? 'HIDE' : 'SHOW'} COMPLETED TO-DOS`}
         />
         {
@@ -57,6 +50,7 @@ class CompletedTodoList extends React.Component {
 
 const mapStateToProps = state => ({
   todos: getTodos(state.todos, 'completed'),
+  showTodos: state.todos.completedTodosAreVisible,
 });
 
 const mapDispatchToProps = dispatch => ({

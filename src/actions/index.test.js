@@ -30,6 +30,13 @@ describe('actions', () => {
     expect(TodoActions.uncompleteTodo(id)).toEqual(expectedAction)
   });
 
+  it('should create an action to toggle completed todos', () => {
+    const expectedAction = {
+      type: types.TOGGLE_COMPLETED_TODOS,
+    }
+    expect(TodoActions.toggleCompletedTodos()).toEqual(expectedAction)
+  });
+
   it('should create an action to swap to-dos', () => {
   	const indexes = {
   		oldIndex: 0,
