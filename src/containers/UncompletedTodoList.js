@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -25,8 +25,8 @@ const UnompletedTodoList = ({ actions, todos }) => (
 );
 
 UnompletedTodoList.propTypes = {
-  todos: React.PropTypes.array.isRequired,
-  actions: React.PropTypes.object.isRequired
+  todos: PropTypes.array.isRequired,
+  actions: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -34,7 +34,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(TodoActions, dispatch)
+  actions: bindActionCreators(TodoActions, dispatch),
 });
 
 export default connect(

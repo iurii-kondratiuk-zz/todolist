@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import './Input.css';
 
 export default class Input extends React.Component {
   static propTypes = {
-    onSave: React.PropTypes.func,
-    placeholder: React.PropTypes.string,
+    onSave: PropTypes.func,
+    placeholder: PropTypes.string,
   }
 
   state = {
@@ -27,13 +27,15 @@ export default class Input extends React.Component {
 
   render() {
     return (
-      <input className="Input"
-             type="text"
-             placeholder={this.props.placeholder}
-             autoFocus="true"
-             value={this.state.text}
-             onChange={this.handleChange}
-             onKeyDown={this.handleKeyDown} />
+      <input
+        className="Input"
+        type="text"
+        placeholder={this.props.placeholder}
+        autoFocus="true"
+        value={this.state.text}
+        onChange={this.handleChange}
+        onKeyDown={this.handleKeyDown}
+      />
     );
   }
 }

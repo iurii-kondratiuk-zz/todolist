@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { SortableHandle } from 'react-sortable-hoc';
 
 import './DragHandle.css';
@@ -10,7 +10,7 @@ const DragHandle = SortableHandle(({ children }) => (
 ));
 
 DragHandle.propTypes = {
-  children: React.PropTypes.node,
+  children: PropTypes.node,
 };
 
 export default DragHandle;

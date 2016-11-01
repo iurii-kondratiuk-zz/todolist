@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -13,8 +13,8 @@ import * as TodoActions from '../actions';
 class CompletedTodoList extends React.Component {
 
   static propTypes = {
-    todos: React.PropTypes.array.isRequired,
-    actions: React.PropTypes.object.isRequired
+    todos: PropTypes.array.isRequired,
+    actions: PropTypes.object.isRequired,
   }
 
   state = {
@@ -24,7 +24,7 @@ class CompletedTodoList extends React.Component {
   toggleTodos = () => this.setState({ showTodos: !this.state.showTodos });
 
   render() {
-    const { actions, todos, hideTodos } = this.props;
+    const { actions, todos } = this.props;
     const { showTodos } = this.state;
     
     return (

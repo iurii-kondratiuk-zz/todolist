@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import './TodoList.css';
 
@@ -9,7 +9,7 @@ const TodoList = ({ children }) => (
 );
 
 TodoList.propTypes = {
-  children: React.PropTypes.node,
+  children: PropTypes.node,
 };
 
 export default TodoList;
