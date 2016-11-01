@@ -1,15 +1,18 @@
 import * as utils from '../utils';
 
 describe('utils', () => {
-  it('moveAndUpdate', () => {
+  it('getTodos', () => {
     const state = {
-      old: [{ id: 1 }],
-      new: [],
+      todosById: {
+        1: { text: 'todo 1' },
+        2: { text: 'todo 2' },
+        3: { text: 'todo 3' },
+      },
+      inbox: [1, 2],
     };
 
-    expect(utils.moveAndUpdate(state, 1, 'old', 'new', { new: true })).toEqual({
-      old: [],
-      new: [{ id: 1, new: true }],
-    });
+    expect(utils.getTodos(state, 'inbox')).toEqual(
+      [{ text: 'todo 1' }, { text: 'todo 2' }]
+    );
   });
 });

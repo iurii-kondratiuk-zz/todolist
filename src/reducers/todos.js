@@ -1,40 +1,69 @@
 import * as types from '../constants/ActionTypes';
 import { arrayMove } from 'react-sortable-hoc';
 
-import { moveAndUpdate } from '../utils';
+const initialState = {
+  todosById: {},
+  completed: [],
+  inbox: [],
+};
 
 let latestTodoId = 0;
 
-const initialState = {
-  completed: [],
-  uncompleted: [],
-};
+const Todo = text => ({
+  completed: false,
+  id: latestTodoId++,
+  text: text,
+});
 
 export default function todos(state = initialState, action) {
 
   switch(action.type) {
 
     case types.ADD_TODO:
+      const todo = Todo(action.text);
       return {
         ...state,
-        uncompleted: state.uncompleted.concat([{
-          completed: false,
-          id: latestTodoId++,
-          index: action.index,
-          text: action.text,
-        }])
+        todosById: {
+          ...state.todosById,
+          [todo.id]: todo,
+        },
+        inbox: [...state.inbox, todo.id]
       }
 
     case types.COMPLETE_TODO:
-      return moveAndUpdate(state, action.id, 'uncompleted', 'completed', { completed: true });
+      const todoToComplete = state.todosById[action.id];
+      return {
+        ...state,
+        todosById: {
+          ...state.todosById,
+          [todoToComplete.id]: {
+            ...todoToComplete,
+            completed: true,
+          }
+        },
+        completed: [...state.completed, action.id],
+        inbox: state.inbox.filter(id => id !== action.id)
+      }
 
     case types.UNCOMPLETE_TODO:
-      return moveAndUpdate(state, action.id, 'completed', 'uncompleted', { completed: false });
+      const todoToUncomplete = state.todosById[action.id];
+      return {
+        ...state,
+        todosById: {
+          ...state.todosById,
+          [todoToUncomplete.id]: {
+            ...todoToUncomplete,
+            completed: false,
+          }
+        },
+        completed: state.completed.filter(id => id !== action.id),
+        inbox: [...state.inbox, action.id],
+      }
 
     case types.SWAP_TODOS:
       return {
         ...state,
-        uncompleted: arrayMove(state.uncompleted, action.oldIndex, action.newIndex),
+        inbox: arrayMove(state.inbox, action.oldIndex, action.newIndex),
       }
 
     default:

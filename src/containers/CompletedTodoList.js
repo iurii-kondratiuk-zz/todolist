@@ -6,6 +6,8 @@ import Button from '../components/Button';
 import { Todo } from '../components/Todo';
 import { TodoList } from '../components/TodoList';
 
+import { getTodos } from '../utils';
+
 import * as TodoActions from '../actions';
 
 class CompletedTodoList extends React.Component {
@@ -22,23 +24,27 @@ class CompletedTodoList extends React.Component {
   toggleTodos = () => this.setState({ showTodos: !this.state.showTodos });
 
   render() {
-    const { actions, todos } = this.props;
+    const { actions, todos, hideTodos } = this.props;
     const { showTodos } = this.state;
     
     return (
       <div>
-        <Button disabled={!todos.length}
-                onClick={this.toggleTodos}
-                text={`${todos.length && showTodos ? 'HIDE' : 'SHOW'} COMPLETED TO-DOS`} />
+        <Button
+          disabled={!todos.length}
+          onClick={this.toggleTodos}
+          text={`${!!todos.length && showTodos ? 'HIDE' : 'SHOW'} COMPLETED TO-DOS`}
+        />
         {
           showTodos && (
             <TodoList>
               {
                 todos.map((todo, index) => (
-                  <Todo index={index}            
-                        key={index}
-                        onComplete={actions.uncompleteTodo}
-                        todo={todo} />
+                  <Todo
+                    index={index}            
+                    key={index}
+                    onComplete={actions.uncompleteTodo}
+                    todo={todo}
+                  />
                 ))
               }
             </TodoList>
@@ -50,7 +56,7 @@ class CompletedTodoList extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  todos: state.todos.completed,
+  todos: getTodos(state.todos, 'completed'),
 });
 
 const mapDispatchToProps = dispatch => ({
