@@ -6,7 +6,7 @@
   box-sizing: border-box;
   color: #2d3151;
   display: flex;
-  font-size: 16px;
+  font-size: 14px;
   height: 46px;
   line-height: 30px;
   list-style: none;
@@ -23,4 +23,11 @@
 
 .Todo--isDragging {
   opacity: 0
+}
+
+.Todo-text {
+  width: 95%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
