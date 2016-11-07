@@ -5,7 +5,7 @@ const Checkbox = ({ checked, onChange }) => (
   <div 
   	className={classnames('Checkbox', { 'Checkbox--checked': checked })}
     onClick={onChange}
-   />
+  />
 );
 
 

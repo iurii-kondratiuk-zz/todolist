@@ -5,5 +5,5 @@ import './TodoList.css';
 
 export { 
 	TodoList,
-	SortableTodoList
+	SortableTodoList,
 };

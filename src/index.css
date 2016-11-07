@@ -1,6 +1,6 @@
 html, body, #todo-app {
-	padding: 0;
-	margin: 0;
 	height: 100%;
-	font-family: 'BlinkMacSystemFont';
+	font-family: 'Verdana';
+	margin: 0;
+	padding: 0;
 }

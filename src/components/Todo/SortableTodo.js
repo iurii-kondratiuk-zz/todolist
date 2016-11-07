@@ -9,7 +9,7 @@ const SortableTodo = ({ onComplete, todo }) => (
     <Todo
     	onComplete={onComplete}
       todo={todo}
-     />
+    />
   </DragHandle>
 );
 
