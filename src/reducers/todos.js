@@ -2,18 +2,19 @@ import * as types from '../constants/ActionTypes';
 import { arrayMove } from 'react-sortable-hoc';
 
 const initialState = {
-  todosById: {},
   completed: [],
-  inbox: [],
   completedTodosAreVisible: false,
+  isLoading: true,
+  inbox: [],
+  todosById: {},
 };
 
 let latestTodoId = 0;
 
-const Todo = text => ({
+const Todo = title => ({
   completed: false,
   id: latestTodoId++,
-  text: text,
+  title: title,
 });
 
 export default function todos(state = initialState, action) {
@@ -21,7 +22,7 @@ export default function todos(state = initialState, action) {
   switch(action.type) {
 
     case types.ADD_TODO:
-      const todo = Todo(action.text);
+      const todo = Todo(action.title);
       return {
         ...state,
         todosById: {
@@ -45,6 +46,21 @@ export default function todos(state = initialState, action) {
         completed: [...state.completed, action.id],
         inbox: state.inbox.filter(id => id !== action.id)
       }
+
+    case types.RECEIVE_TODOS:
+      const ids = action.todos.map(todo => todo.id);
+      const todosById = action.todos.reduce((acc, todo) =>  ({ ...acc, [todo.id]: todo }), {});
+      const todosType = action.completed ? 'completed' : 'inbox';
+
+      return {
+        ...state,
+        [todosType]: ids,
+        todosById: {
+          ...state.todosById,
+          ...todosById,
+        },
+        isLoading: false,
+      };
 
     case types.UNCOMPLETE_TODO:
       const todoToUncomplete = state.todosById[action.id];

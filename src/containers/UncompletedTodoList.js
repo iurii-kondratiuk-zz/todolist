@@ -9,24 +9,35 @@ import { getTodos } from '../utils';
 
 import * as TodoActions from '../actions';
 
-const UnompletedTodoList = ({ actions, todos }) => (
-  <SortableTodoList onSort={actions.swapTodos}>
-    {
-      todos.map((todo, index) => (
-        <SortableTodo
-          index={index}            
-          key={todo.id}
-          onComplete={actions.completeTodo}
-          todo={todo}
-        />
-      ))
-    }
-  </SortableTodoList>
-);
+class UnompletedTodoList extends React.Component {
 
-UnompletedTodoList.propTypes = {
-  todos: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired,
+  static propTypes = {
+    todos: PropTypes.array.isRequired,
+    actions: PropTypes.object.isRequired,
+  };
+
+  componentDidMount() {
+    this.props.dispatch(TodoActions.fetchTodos({ completed: false }));
+  }
+
+  render() {
+    const { actions, todos } = this.props;
+    console.log(todos)
+    return (
+      <SortableTodoList onSort={actions.swapTodos}>
+        {
+          todos.map((todo, index) => (
+            <SortableTodo
+              index={index}            
+              key={todo.id}
+              onComplete={actions.completeTodo}
+              todo={todo}
+            />
+          ))
+        }
+      </SortableTodoList>
+    );
+  }
 };
 
 const mapStateToProps = state => ({
@@ -35,6 +46,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(TodoActions, dispatch),
+  dispatch,
 });
 
 export default connect(

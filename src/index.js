@@ -1,6 +1,7 @@
 import React from 'react';
+import thunk from 'redux-thunk';
 import { render } from 'react-dom';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 import reducer from './reducers';
@@ -8,7 +9,10 @@ import App from './components/App';
 
 import './index.css';
 
-const store = createStore(reducer);
+const store = createStore(
+	reducer,
+	applyMiddleware(thunk),
+);
 
 render(
   <Provider store={store}>

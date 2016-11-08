@@ -17,6 +17,10 @@ class CompletedTodoList extends React.Component {
     actions: PropTypes.object.isRequired,
   }
 
+  componentDidMount() {
+    this.props.dispatch(TodoActions.fetchTodos({ completed: true }));
+  }
+
   render() {
     const { actions, showTodos, todos } = this.props;
 
@@ -54,7 +58,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(TodoActions, dispatch)
+  actions: bindActionCreators(TodoActions, dispatch),
+  dispatch,
 });
 
 export default connect(

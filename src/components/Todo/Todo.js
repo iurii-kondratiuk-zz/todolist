@@ -9,7 +9,7 @@ const Todo = ({ onComplete, todo }) => (
     	checked={todo.completed}
       onChange={() => onComplete(todo.id)}
     />
-    <span className="Todo-text">{todo.text}</span>
+    <span className="Todo-text">{todo.title}</span>
   </li>
 );
 
