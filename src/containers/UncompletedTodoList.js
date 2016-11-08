@@ -7,7 +7,7 @@ import { SortableTodoList } from '../components/TodoList';
 
 import { getTodos } from '../utils';
 
-import * as TodoActions from '../actions';
+import * as TodoActions from '../actions/todo';
 
 const UnompletedTodoList = ({ actions, todos }) => (
   <SortableTodoList onSort={actions.swapTodos}>

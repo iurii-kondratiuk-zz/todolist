@@ -8,7 +8,7 @@ import { TodoList } from '../components/TodoList';
 
 import { getTodos } from '../utils';
 
-import * as TodoActions from '../actions';
+import * as TodoActions from '../actions/todo';
 
 class CompletedTodoList extends React.Component {
 

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Input from '../components/Input';
 
-import * as TodoActions from '../actions';
+import * as TodoActions from '../actions/todo';
 
 const TodoInput = ({ actions }) => (
   <Input
