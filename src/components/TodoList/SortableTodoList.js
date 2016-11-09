@@ -5,9 +5,10 @@ import TodoList from './TodoList';
 
 const SortableTodoListWrapper = SortableContainer(TodoList);
 
-const SortableTodoList = ({ children, onSort }) => (
+const SortableTodoList = ({ children, isFetching, onSort }) => (
   <SortableTodoListWrapper
   	distance={1}
+  	isFetching={isFetching}
     onSortEnd={onSort}
     useDragHandle={true}
   >
@@ -17,6 +18,7 @@ const SortableTodoList = ({ children, onSort }) => (
 
 SortableTodoList.propTypes = {
   children: PropTypes.node,
+  isFetching: PropTypes.bool,
   onSort: PropTypes.func,
 };
 

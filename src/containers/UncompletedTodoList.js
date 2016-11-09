@@ -12,8 +12,9 @@ import * as TodoActions from '../actions';
 class UnompletedTodoList extends React.Component {
 
   static propTypes = {
-    todos: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired,
+    isFetching: PropTypes.bool.isRequired,
+    todos: PropTypes.array.isRequired,
   };
 
   componentDidMount() {
@@ -23,10 +24,13 @@ class UnompletedTodoList extends React.Component {
   onComplete = todo => this.props.actions.completeTodo(todo);
 
   render() {
-    const { actions, todos } = this.props;
-    console.log(todos)
+    const { actions, isFetching, todos } = this.props;
+    console.log('inbox', isFetching)
     return (
-      <SortableTodoList onSort={actions.swapTodos}>
+      <SortableTodoList
+        isFetching={isFetching}
+        onSort={actions.swapTodos}
+      >
         {
           todos.map((todo, index) => (
             <SortableTodo
@@ -44,6 +48,7 @@ class UnompletedTodoList extends React.Component {
 
 const mapStateToProps = state => ({
   todos: getTodos(state.todos, 'inbox'),
+  isFetching: state.todos.isFetching.inbox,
 });
 
 const mapDispatchToProps = dispatch => ({

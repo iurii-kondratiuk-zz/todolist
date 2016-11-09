@@ -1,13 +1,18 @@
 import React, { PropTypes } from 'react';
 
-const TodoList = ({ children }) => (
+const TodoList = ({ children, isFetching }) => (
   <ul className="TodoList">
-    {children}
+    {
+    	isFetching
+    		? <div className="TodoList-loading">TO-DOs are loading...</div>
+    		: children
+    }
   </ul>
 );
 
 TodoList.propTypes = {
   children: PropTypes.node,
+  isFetching: PropTypes.bool,
 };
 
 export default TodoList;

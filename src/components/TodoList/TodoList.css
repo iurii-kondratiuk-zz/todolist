@@ -2,3 +2,9 @@
 	list-style: none;
 	padding: 0;
 }
+
+.TodoList-loading {
+	color: #afafaf;
+  text-align: center;
+  font-size: 13px;
+}

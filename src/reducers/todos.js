@@ -5,7 +5,10 @@ const initialState = {
   activeListId: null,
   completed: [],
   completedTodosAreVisible: false,
-  isLoading: true,
+  isFetching: {
+    inbox: true,
+    completed: true,
+  },
   inbox: [],
   todosById: {},
 };
@@ -51,7 +54,19 @@ export default function todos(state = initialState, action) {
           ...state.todosById,
           ...todosById,
         },
-        isLoading: false,
+        isFetching: {
+          ...state.isFetching,
+          [todosType]: false
+        }
+      };
+
+    case types.REQUEST_TODOS:
+      return {
+        ...state,
+        isFetching: {
+          ...state.isFetching,
+          [action.completed ? 'completed' : 'inbox']: true,
+        },
       };
 
     case types.UNCOMPLETE_TODO:

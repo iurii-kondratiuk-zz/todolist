@@ -24,14 +24,19 @@ class CompletedTodoList extends React.Component {
   onUncomplete = todo => this.props.actions.uncompleteTodo(todo);
 
   render() {
-    const { actions, showTodos, todos } = this.props;
+    const { actions, isFetching, showTodos, todos } = this.props;
+    const buttonLabel = isFetching
+      ? 'LOADING'
+      : !!todos.length && showTodos
+        ? 'HIDE'
+        : 'SHOW';
 
     return (
       <div>
         <Button
           disabled={!todos.length}
           onClick={actions.toggleCompletedTodos}
-          text={`${!!todos.length && showTodos ? 'HIDE' : 'SHOW'} COMPLETED TO-DOS`}
+          text={`${buttonLabel} COMPLETED TO-DOS`}
         />
         {
           showTodos && (
@@ -57,6 +62,7 @@ class CompletedTodoList extends React.Component {
 const mapStateToProps = state => ({
   todos: getTodos(state.todos, 'completed'),
   showTodos: state.todos.completedTodosAreVisible,
+  isFetching: state.todos.isFetching.completed,
 });
 
 const mapDispatchToProps = dispatch => ({
