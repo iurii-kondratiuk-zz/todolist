@@ -22,10 +22,13 @@ export const swapTodos = indexes => ({
   ...indexes
 });
 
-export const uncompleteTodo = id => ({
-  type: types.UNCOMPLETE_TODO,
-  id,
-});
+export const uncompleteTodo = ({ id, revision })  => dispatch => {
+  axios.put(`/todos/${id}`, { revision, data: { completed: false } })
+    .then(json => dispatch({
+      type: types.UNCOMPLETE_TODO,
+      todo: json.data,
+    }));    
+};
 
 export const toggleCompletedTodos = () => ({
   type: types.TOGGLE_COMPLETED_TODOS,

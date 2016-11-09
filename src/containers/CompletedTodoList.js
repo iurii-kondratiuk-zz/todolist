@@ -21,6 +21,8 @@ class CompletedTodoList extends React.Component {
     this.props.actions.fetchTodos({ completed: true });
   }
 
+  onUncomplete = todo => this.props.actions.uncompleteTodo(todo);
+
   render() {
     const { actions, showTodos, todos } = this.props;
 
@@ -39,7 +41,7 @@ class CompletedTodoList extends React.Component {
                   <Todo
                     index={index}            
                     key={todo.id}
-                    onComplete={actions.uncompleteTodo}
+                    onComplete={this.onUncomplete}
                     todo={todo}
                   />
                 ))

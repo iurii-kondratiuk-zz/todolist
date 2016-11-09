@@ -55,18 +55,14 @@ export default function todos(state = initialState, action) {
       };
 
     case types.UNCOMPLETE_TODO:
-      const todoToUncomplete = state.todosById[action.id];
       return {
         ...state,
         todosById: {
           ...state.todosById,
-          [todoToUncomplete.id]: {
-            ...todoToUncomplete,
-            completed: false,
-          }
+          [action.todo.id]: action.todo,
         },
-        completed: state.completed.filter(id => id !== action.id),
-        inbox: [...state.inbox, action.id],
+        inbox: [...state.inbox, action.todo.id],
+        completed: state.completed.filter(id => id !== action.todo.id)
       }
 
     case types.TOGGLE_COMPLETED_TODOS:
