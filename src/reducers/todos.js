@@ -17,29 +17,24 @@ export default function todos(state = initialState, action) {
   switch(action.type) {
 
     case types.ADD_TODO:
-      const { todo } = action;
       return {
         ...state,
         todosById: {
           ...state.todosById,
           [action.todo.id]: action.todo,
         },
-        inbox: [...state.inbox, todo.id]
+        inbox: [...state.inbox, action.todo.id]
       }
 
     case types.COMPLETE_TODO:
-      const todoToComplete = state.todosById[action.id];
       return {
         ...state,
         todosById: {
           ...state.todosById,
-          [todoToComplete.id]: {
-            ...todoToComplete,
-            completed: true,
-          }
+          [action.todo.id]: action.todo,
         },
-        completed: [...state.completed, action.id],
-        inbox: state.inbox.filter(id => id !== action.id)
+        completed: [...state.completed, action.todo.id],
+        inbox: state.inbox.filter(id => id !== action.todo.id)
       }
 
     case types.RECEIVE_TODOS:

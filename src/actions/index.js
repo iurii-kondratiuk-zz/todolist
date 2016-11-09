@@ -9,10 +9,13 @@ export const addTodo = (listId, title)  => dispatch => {
     }));
 };
 
-export const completeTodo = id => ({
-  type: types.COMPLETE_TODO,
-  id,
-});
+export const completeTodo = ({ id, revision })  => dispatch => {
+  axios.put(`/todos/${id}`, { revision, data: { completed: true } })
+    .then(json => dispatch({
+      type: types.COMPLETE_TODO,
+      todo: json.data,
+    }));    
+};
 
 export const swapTodos = indexes => ({
   type: types.SWAP_TODOS,

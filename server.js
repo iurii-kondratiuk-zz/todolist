@@ -46,6 +46,7 @@ const getAccessToken = (req, res, code) => {
 const createTask = (listId, title) => wunderlistAPI.http.tasks.create({ list_id: listId, title });
 const loadLists = () => wunderlistAPI.http.lists.all();
 const loadTasks = (listId, completed) => wunderlistAPI.http.tasks.forList(listId, completed);
+const updateTask = (taskId, { revision, data }) => wunderlistAPI.http.tasks.update(+taskId, revision, data);
 
 app.use((req, res, next) => {
   const { state, code } = req.query;
@@ -74,6 +75,12 @@ app.post('/todos', (req, res) => {
   createTask(listId, title)
     .done(task => res.status(200).send(task))
     .fail(() => console.error('there was a problem with creating a task'));
+});
+
+app.put('/todos/:todoId', (req, res) => {
+  updateTask(req.params.todoId, req.body)
+    .done(task => res.status(200).send(task))
+    .fail((error) => console.error('there was a problem with updating a task', error));
 });
 
 app.listen(3000, () => {

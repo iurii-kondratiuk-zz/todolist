@@ -20,6 +20,8 @@ class UnompletedTodoList extends React.Component {
     this.props.actions.fetchTodos({ completed: false });
   }
 
+  onComplete = todo => this.props.actions.completeTodo(todo);
+
   render() {
     const { actions, todos } = this.props;
     console.log(todos)
@@ -30,7 +32,7 @@ class UnompletedTodoList extends React.Component {
             <SortableTodo
               index={index}            
               key={todo.id}
-              onComplete={actions.completeTodo}
+              onComplete={this.onComplete}
               todo={todo}
             />
           ))
