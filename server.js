@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const rp = require('request-promise');
@@ -14,6 +15,9 @@ const app = express();
 
 app.set('views', './public');
 app.set('view engine', 'ejs');
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(cookieParser());
 app.use(session({ secret: '1234567890QWERTY' }));
@@ -39,6 +43,10 @@ const getAccessToken = (req, res, code) => {
   .catch(err => res.status(403).send('Authentication Error'));
 };
 
+const createTask = (listId, title) => wunderlistAPI.http.tasks.create({ list_id: listId, title });
+const loadLists = () => wunderlistAPI.http.lists.all();
+const loadTasks = (listId, completed) => wunderlistAPI.http.tasks.forList(listId, completed);
+
 app.use((req, res, next) => {
   const { state, code } = req.query;
   if (req.session.accessToken) return next();
@@ -47,21 +55,25 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-	console.log('render index.html', req.session.accessToken);
 	res.render('index');
 });
 
 app.get('/todos', (req, res) => {
-	wunderlistAPI.http.lists.all()
-	  .done((lists) => {
-	    const inbox = lists.find((list) => list.title === 'inbox');
-	    wunderlistAPI.http.tasks.forList(inbox.id, req.query.completed === 'true')
-	    	.done((tasks) => {
-	    		res.status(200).send(tasks);
-	    	})
-	    	.fail(() => console.error('there was a problem'));
-	  })
-	  .fail(() => console.error('there was a problem'));
+	loadLists()
+		.done(lists => {
+			const inbox = lists.find((list) => list.title === 'inbox');
+			loadTasks(inbox.id, req.query.completed === 'true')
+				.done(tasks => res.status(200).send({ listId: inbox.id, tasks }))
+				.fail(() => console.error('there was a problem with loading tasks'));
+		})
+		.fail(() => console.error('there was a problem with loading lists'));
+});
+
+app.post('/todos', (req, res) => {
+  const { listId, title } = req.body;
+  createTask(listId, title)
+    .done(task => res.status(200).send(task))
+    .fail(() => console.error('there was a problem with creating a task'));
 });
 
 app.listen(3000, () => {

@@ -17,7 +17,7 @@ class UnompletedTodoList extends React.Component {
   };
 
   componentDidMount() {
-    this.props.dispatch(TodoActions.fetchTodos({ completed: false }));
+    this.props.actions.fetchTodos({ completed: false });
   }
 
   render() {
@@ -46,7 +46,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(TodoActions, dispatch),
-  dispatch,
 });
 
 export default connect(

@@ -6,22 +6,36 @@ import Input from '../components/Input';
 
 import * as TodoActions from '../actions';
 
-const TodoInput = ({ actions }) => (
-  <Input
-  	onSave={actions.addTodo}
-    placeholder="Add a to-do..."
-  />
-);
+class TodoInput extends React.Component {
 
-TodoInput.propTypes = {
-  actions: PropTypes.object.isRequired,
-};
+	static propTypes = {
+	  actions: PropTypes.object.isRequired,
+	}
+
+	onSave = title => {
+		const { actions, listId } = this.props;
+		actions.addTodo(listId, title);
+	}
+
+	render() {
+		return (
+			<Input
+		  	onSave={this.onSave}
+		    placeholder="Add a to-do..."
+		  />
+		);
+	}
+}
+
+const mapStateToProps = state => ({
+  listId: state.todos.activeListId,
+});
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(TodoActions, dispatch),
 });
 
 export default connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps
 )(TodoInput);
