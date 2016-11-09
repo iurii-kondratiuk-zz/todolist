@@ -4,9 +4,10 @@ import { SortableElement } from 'react-sortable-hoc';
 import Todo from './Todo';
 import DragHandle from '../DragHandle';
 
-const SortableTodo = ({ onComplete, todo }) => (
+const SortableTodo = ({ onComplete, inProcess, todo }) => (
   <DragHandle>
     <Todo
+    	inProcess={inProcess}
     	onComplete={onComplete}
       todo={todo}
     />

@@ -8,6 +8,7 @@ const initialState = {
   isFetching: {
     inbox: true,
     completed: true,
+    todo: null,
   },
   inbox: [],
   todosById: {},
@@ -32,6 +33,10 @@ export default function todos(state = initialState, action) {
     case types.COMPLETE_TODO:
       return {
         ...state,
+        isFetching: {
+          ...state.isFetching,
+          todo: null,
+        },
         todosById: {
           ...state.todosById,
           [action.todo.id]: action.todo,
@@ -69,9 +74,22 @@ export default function todos(state = initialState, action) {
         },
       };
 
+    case types.REQUEST_TODO_UPDATE:
+      return {
+        ...state,
+        isFetching: {
+          ...state.isFetching,
+          todo: action.id,
+        },
+      };
+
     case types.UNCOMPLETE_TODO:
       return {
         ...state,
+        isFetching: {
+          ...state.isFetching,
+          todo: null,
+        },
         todosById: {
           ...state.todosById,
           [action.todo.id]: action.todo,

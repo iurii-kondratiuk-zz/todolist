@@ -22,6 +22,11 @@
   text-decoration: line-through;
 }
 
+.Todo--inProcess {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
 .Todo--isDragging {
   opacity: 0
 }
@@ -31,4 +36,21 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.Todo-loading {
+  animation: spin 1s linear infinite;
+  border: 3px solid #a9a9a9;
+  border-right-color: transparent;
+  border-radius: 50%;
+  height: 11px;
+  margin-right: 8px;
+  width: 11px;
+}
+
+@keyframes spin
+{
+  from { transform: rotate(0deg);   opacity: 0.2; }
+  50%  { transform: rotate(180deg); opacity: 1.0; }
+  to   { transform: rotate(360deg); opacity: 0.2; }
 }

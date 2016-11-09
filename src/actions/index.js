@@ -10,12 +10,14 @@ export const addTodo = (listId, title)  => dispatch => {
 };
 
 export const completeTodo = ({ id, revision })  => dispatch => {
+  dispatch(requestTodoUpdate(id));
   axios.put(`/todos/${id}`, { revision, data: { completed: true } })
     .then(json => dispatch({
       type: types.COMPLETE_TODO,
       todo: json.data,
     }));    
 };
+
 export const fetchTodos = ({ completed }) => (dispatch) => {
   dispatch(requestTodos(completed));
   axios.get(`/todos`, { params: { completed } })
@@ -24,24 +26,29 @@ export const fetchTodos = ({ completed }) => (dispatch) => {
       todos: json.data,
       completed,
     }));
-}
+};
 
 export const requestTodos = completed => ({
   type: types.REQUEST_TODOS,
   completed,
-})
+});
+
+export const requestTodoUpdate = id => ({
+  type: types.REQUEST_TODO_UPDATE,
+  id,
+});
 
 export const swapTodos = indexes => ({
   type: types.SWAP_TODOS,
   ...indexes
 });
 
-
 export const toggleCompletedTodos = () => ({
   type: types.TOGGLE_COMPLETED_TODOS,
 });
 
 export const uncompleteTodo = ({ id, revision })  => dispatch => {
+  dispatch(requestTodoUpdate(id));
   axios.put(`/todos/${id}`, { revision, data: { completed: false } })
     .then(json => dispatch({
       type: types.UNCOMPLETE_TODO,

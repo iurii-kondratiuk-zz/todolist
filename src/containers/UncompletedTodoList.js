@@ -24,8 +24,8 @@ class UnompletedTodoList extends React.Component {
   onComplete = todo => this.props.actions.completeTodo(todo);
 
   render() {
-    const { actions, isFetching, todos } = this.props;
-    console.log('inbox', isFetching)
+    const { actions, isFetching, todoInProcess, todos } = this.props;
+
     return (
       <SortableTodoList
         isFetching={isFetching}
@@ -34,7 +34,8 @@ class UnompletedTodoList extends React.Component {
         {
           todos.map((todo, index) => (
             <SortableTodo
-              index={index}            
+              index={index}   
+              inProcess={todoInProcess === todo.id}         
               key={todo.id}
               onComplete={this.onComplete}
               todo={todo}
@@ -49,6 +50,7 @@ class UnompletedTodoList extends React.Component {
 const mapStateToProps = state => ({
   todos: getTodos(state.todos, 'inbox'),
   isFetching: state.todos.isFetching.inbox,
+  todoInProcess: state.todos.isFetching.todo,
 });
 
 const mapDispatchToProps = dispatch => ({
