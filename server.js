@@ -43,10 +43,10 @@ const getAccessToken = (req, res, code) => {
   .catch(err => res.status(403).send('Authentication Error'));
 };
 
-const createTask = (listId, title) => wunderlistAPI.http.tasks.create({ list_id: listId, title });
+const createTodo = (listId, title) => wunderlistAPI.http.tasks.create({ list_id: listId, title });
 const loadLists = () => wunderlistAPI.http.lists.all();
-const loadTasks = (listId, completed) => wunderlistAPI.http.tasks.forList(listId, completed);
-const updateTask = (taskId, { revision, data }) => wunderlistAPI.http.tasks.update(+taskId, revision, data);
+const loadTodos = (listId, completed) => wunderlistAPI.http.tasks.forList(listId, completed);
+const updateTodo = (taskId, { revision, data }) => wunderlistAPI.http.tasks.update(+taskId, revision, data);
 
 app.use((req, res, next) => {
   const { state, code } = req.query;
@@ -63,24 +63,24 @@ app.get('/todos', (req, res) => {
 	loadLists()
 		.done(lists => {
 			const inbox = lists.find((list) => list.title === 'inbox');
-			loadTasks(inbox.id, req.query.completed === 'true')
-				.done(tasks => res.status(200).send({ listId: inbox.id, tasks }))
-				.fail(() => console.error('there was a problem with loading tasks'));
+			loadTodos(inbox.id, req.query.completed === 'true')
+				.done(todos => res.status(200).send({ listId: inbox.id, todos }))
+				.fail(() => console.error('there was a problem with loading todos'));
 		})
 		.fail(() => console.error('there was a problem with loading lists'));
 });
 
 app.post('/todos', (req, res) => {
   const { listId, title } = req.body;
-  createTask(listId, title)
-    .done(task => res.status(200).send(task))
-    .fail(() => console.error('there was a problem with creating a task'));
+  createTodo(listId, title)
+    .done(todo => res.status(200).send(todo))
+    .fail(() => console.error('there was a problem with creating a todo'));
 });
 
 app.put('/todos/:todoId', (req, res) => {
-  updateTask(req.params.todoId, req.body)
-    .done(task => res.status(200).send(task))
-    .fail((error) => console.error('there was a problem with updating a task', error));
+  updateTodo(req.params.todoId, req.body)
+    .done(todo => res.status(200).send(todo))
+    .fail((error) => console.error('there was a problem with updating a todo', error));
 });
 
 app.listen(3000, () => {

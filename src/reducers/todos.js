@@ -37,9 +37,9 @@ export default function todos(state = initialState, action) {
       }
 
     case types.RECEIVE_TODOS:
-      const { listId, tasks } = action.todos;
-      const ids = tasks.map(todo => todo.id);
-      const todosById = tasks.reduce((acc, todo) =>  ({ ...acc, [todo.id]: todo }), {});
+      const { listId, todos } = action.todos;
+      const ids = todos.map(todo => todo.id);
+      const todosById = todos.reduce((acc, todo) =>  ({ ...acc, [todo.id]: todo }), {});
       const todosType = action.completed ? 'completed' : 'inbox';
 
       return {
