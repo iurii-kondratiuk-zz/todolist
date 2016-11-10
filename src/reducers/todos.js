@@ -5,11 +5,6 @@ const initialState = {
   activeListId: null,
   completed: [],
   completedTodosAreVisible: false,
-  isFetching: {
-    inbox: true,
-    completed: true,
-    todo: null,
-  },
   inbox: [],
   todosById: {},
 };
@@ -33,15 +28,11 @@ export default function todos(state = initialState, action) {
     case types.COMPLETE_TODO:
       return {
         ...state,
-        isFetching: {
-          ...state.isFetching,
-          todo: null,
-        },
         todosById: {
           ...state.todosById,
           [action.todo.id]: action.todo,
         },
-        completed: [...state.completed, action.todo.id],
+        completed: [action.todo.id, ...state.completed],
         inbox: state.inbox.filter(id => id !== action.todo.id)
       }
 
@@ -59,37 +50,11 @@ export default function todos(state = initialState, action) {
           ...state.todosById,
           ...todosById,
         },
-        isFetching: {
-          ...state.isFetching,
-          [todosType]: false
-        }
-      };
-
-    case types.REQUEST_TODOS:
-      return {
-        ...state,
-        isFetching: {
-          ...state.isFetching,
-          [action.completed ? 'completed' : 'inbox']: true,
-        },
-      };
-
-    case types.REQUEST_TODO_UPDATE:
-      return {
-        ...state,
-        isFetching: {
-          ...state.isFetching,
-          todo: action.id,
-        },
       };
 
     case types.UNCOMPLETE_TODO:
       return {
         ...state,
-        isFetching: {
-          ...state.isFetching,
-          todo: null,
-        },
         todosById: {
           ...state.todosById,
           [action.todo.id]: action.todo,

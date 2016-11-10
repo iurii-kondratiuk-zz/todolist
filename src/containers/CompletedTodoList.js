@@ -63,8 +63,8 @@ class CompletedTodoList extends React.Component {
 const mapStateToProps = state => ({
   todos: getTodos(state.todos, 'completed'),
   showTodos: state.todos.completedTodosAreVisible,
-  isFetching: state.todos.isFetching.completed,
-  todoInProcess: state.todos.isFetching.todo,
+  isFetching: state.fetching.completed,
+  todoInProcess: state.fetching.todo,
 });
 
 const mapDispatchToProps = dispatch => ({

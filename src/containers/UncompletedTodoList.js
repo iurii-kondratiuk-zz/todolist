@@ -49,8 +49,8 @@ class UnompletedTodoList extends React.Component {
 
 const mapStateToProps = state => ({
   todos: getTodos(state.todos, 'inbox'),
-  isFetching: state.todos.isFetching.inbox,
-  todoInProcess: state.todos.isFetching.todo,
+  isFetching: state.fetching.inbox,
+  todoInProcess: state.fetching.todo,
 });
 
 const mapDispatchToProps = dispatch => ({
