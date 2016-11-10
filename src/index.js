@@ -10,8 +10,8 @@ import App from './components/App';
 import './index.scss';
 
 const store = createStore(
-	reducer,
-	applyMiddleware(thunk),
+  reducer,
+  applyMiddleware(thunk),
 );
 
 render(

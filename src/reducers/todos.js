@@ -20,7 +20,7 @@ export default function todos(state = initialState, action) {
           ...state.todosById,
           [action.todo.id]: action.todo,
         },
-        inbox: [...state.inbox, action.todo.id]
+        inbox: [action.todo.id, ...state.inbox],
       }
 
     case types.COMPLETE_TODO:

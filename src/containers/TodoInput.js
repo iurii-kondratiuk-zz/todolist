@@ -8,23 +8,23 @@ import * as TodoActions from '../actions';
 
 class TodoInput extends React.Component {
 
-	static propTypes = {
-	  actions: PropTypes.object.isRequired,
-	}
+  static propTypes = {
+    actions: PropTypes.object.isRequired,
+  }
 
-	onSave = title => {
-		const { actions, listId } = this.props;
-		actions.addTodo(listId, title);
-	}
+  onSave = title => {
+    const { actions, listId } = this.props;
+    actions.addTodo(listId, title);
+  }
 
-	render() {
-		return (
-			<Input
-		  	onSave={this.onSave}
-		    placeholder="Add a to-do..."
-		  />
-		);
-	}
+  render() {
+    return (
+      <Input
+        onSave={this.onSave}
+        placeholder="Add a to-do..."
+      />
+    );
+  }
 }
 
 const mapStateToProps = state => ({

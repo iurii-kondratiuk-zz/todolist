@@ -17,7 +17,7 @@ describe('<Todo />', () => {
     expect(wrapper.find('.Todo--completed').length).toEqual(1);
   });
 
-  it('should render loading indicator', () => {
+  it('shouldn't render loading indicator', () => {
     const wrapper = shallow(<Todo todo={{}} />);
     expect(wrapper.find('.Todo-loading').length).toEqual(0);
   });

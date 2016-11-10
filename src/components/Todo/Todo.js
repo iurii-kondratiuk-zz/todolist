@@ -5,16 +5,16 @@ import Checkbox from '../Checkbox';
 
 const Todo = ({ inProcess, onComplete, todo }) => (
   <li className={classnames('Todo', { 'Todo--completed': todo.completed })}>
-  	{
-  		inProcess
-  			? <div className="Todo-loading" />
-  			: (
-			  	<Checkbox
-			    	checked={todo.completed}
-			      onChange={() => onComplete(todo)}
-			    />
-  			)
-  	}
+    {
+      inProcess
+        ? <div className="Todo-loading" />
+        : (
+          <Checkbox
+            checked={todo.completed}
+            onChange={() => onComplete(todo)}
+          />
+        )
+    }
     <span className="Todo-text">{todo.title}</span>
   </li>
 );

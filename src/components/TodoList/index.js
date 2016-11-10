@@ -4,6 +4,6 @@ import SortableTodoList from './SortableTodoList';
 import './TodoList.scss';
 
 export { 
-	TodoList,
-	SortableTodoList,
+  TodoList,
+  SortableTodoList,
 };

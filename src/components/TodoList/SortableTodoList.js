@@ -7,8 +7,8 @@ const SortableTodoListWrapper = SortableContainer(TodoList);
 
 const SortableTodoList = ({ children, isFetching, onSort }) => (
   <SortableTodoListWrapper
-  	distance={1}
-  	isFetching={isFetching}
+    distance={1}
+    isFetching={isFetching}
     onSortEnd={onSort}
     useDragHandle={true}
   >

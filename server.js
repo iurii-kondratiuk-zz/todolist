@@ -30,7 +30,7 @@ app.use(session({ secret: '1234567890QWERTY' }));
 app.use(express.static('./dist'));
 
 const getAccessToken = (req, res, code) => {
-	rp({
+  rp({
     method: 'POST',
     uri: `${wunderlistOauth}/access_token`,
     body: {
@@ -84,7 +84,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-	res.render('index');
+  res.render('index');
 });
 
 app.get('/todos', (req, res) => {

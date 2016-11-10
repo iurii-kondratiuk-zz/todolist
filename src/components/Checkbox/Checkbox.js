@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 const Checkbox = ({ checked, onChange }) => (
   <div 
-  	className={classnames('Checkbox', { 'Checkbox--checked': checked })}
+    className={classnames('Checkbox', { 'Checkbox--checked': checked })}
     onClick={onChange}
   />
 );

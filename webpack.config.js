@@ -20,10 +20,6 @@ module.exports = {
         test: /\.scss$/,
         loaders: ['style', 'css', 'sass'],
       },
-      {
-        test: /\.css$/,
-        loaders: ['style', 'css'],
-      },
     ],
   },
 
@@ -32,10 +28,8 @@ module.exports = {
       React: 'react',
     }),
 
-    // Avoid publishing files when compilation fails
     new webpack.NoErrorsPlugin(),
   ],
 
-  // Create Sourcemaps for the bundle
   devtool: 'cheap-module-source-map',
 };

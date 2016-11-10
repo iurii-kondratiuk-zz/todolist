@@ -4,6 +4,6 @@ import SortableTodo from './SortableTodo';
 import './Todo.scss';
 
 export {
-	Todo,
-	SortableTodo,
+  Todo,
+  SortableTodo,
 };

@@ -3,9 +3,9 @@ import React, { PropTypes } from 'react';
 const TodoList = ({ children, isFetching }) => (
   <ul className="TodoList">
     {
-    	isFetching
-    		? <div className="TodoList-loading">TO-DOs are loading...</div>
-    		: children
+      isFetching
+        ? <div className="TodoList-loading">TO-DOs are loading...</div>
+        : children
     }
   </ul>
 );
