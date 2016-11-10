@@ -1,5 +1,5 @@
 import DragHandle from './DragHandle';
 
-import './DragHandle.css';
+import './DragHandle.scss';
 
 export default DragHandle;

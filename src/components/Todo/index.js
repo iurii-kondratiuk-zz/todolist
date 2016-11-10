@@ -1,7 +1,7 @@
 import Todo from './Todo';
 import SortableTodo from './SortableTodo';
 
-import './Todo.css';
+import './Todo.scss';
 
 export {
 	Todo,

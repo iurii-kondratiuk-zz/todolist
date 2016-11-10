@@ -6,9 +6,9 @@
   cursor: pointer;
   height: 22px;
   outline: none;
-}
 
-.Button[disabled] {
-	cursor: auto;
-	opacity: 0.5;
+  &[disabled] {
+		cursor: auto;
+		opacity: 0.5;
+	}
 }

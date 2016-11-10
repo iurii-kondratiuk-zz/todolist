@@ -1,7 +1,7 @@
 import TodoList from './TodoList';
 import SortableTodoList from './SortableTodoList';
 
-import './TodoList.css';
+import './TodoList.scss';
 
 export { 
 	TodoList,

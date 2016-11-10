@@ -1,5 +1,5 @@
 import Input from './Input';
 
-import './Input.css';
+import './Input.scss';
 
 export default Input;

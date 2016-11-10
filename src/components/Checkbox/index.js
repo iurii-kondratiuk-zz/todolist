@@ -1,5 +1,5 @@
 import Checkbox from './Checkbox';
 
-import './Checkbox.css';
+import './Checkbox.scss';
 
 export default Checkbox;

@@ -1,5 +1,5 @@
 import Header from './Header';
 
-import './Header.css';
+import './Header.scss';
 
 export default Header;

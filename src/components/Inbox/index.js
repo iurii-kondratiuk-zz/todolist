@@ -1,5 +1,5 @@
 import Inbox from './Inbox';
 
-import './Inbox.css';
+import './Inbox.scss';
 
 export default Inbox;
