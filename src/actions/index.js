@@ -4,7 +4,7 @@ import { arrayMove } from 'react-sortable-hoc';
 import * as types from '../constants/ActionTypes';
 
 export const addTodo = (listId, title)  => dispatch => {
-  axios.post(`/todos`, { listId, title })
+  return axios.post(`/todos`, { listId, title })
     .then(json => dispatch({
       type: types.ADD_TODO,
       todo: json.data,
@@ -13,7 +13,7 @@ export const addTodo = (listId, title)  => dispatch => {
 
 export const completeTodo = ({ id, revision })  => dispatch => {
   dispatch(requestTodoUpdate(id));
-  axios.put(`/todos/${id}`, { revision, data: { completed: true } })
+  return axios.put(`/todos/${id}`, { revision, data: { completed: true } })
     .then(json => dispatch({
       type: types.COMPLETE_TODO,
       todo: json.data,
@@ -22,7 +22,7 @@ export const completeTodo = ({ id, revision })  => dispatch => {
 
 export const fetchTodos = ({ completed }) => dispatch => {
   dispatch(requestTodos(completed));
-  axios.get('/todos', { params: { completed } })
+  return axios.get('/todos', { params: { completed } })
     .then(json => dispatch({
       type: types.RECEIVE_TODOS,
       completed,
@@ -44,7 +44,7 @@ export const swapTodos = (inbox, listId, revision, { newIndex, oldIndex }) => di
   const newInbox = arrayMove(inbox, oldIndex, newIndex);
 
   dispatch({ type: types.SWAP_TODOS, revision: revision + 1, values: newInbox }); // optimistic update
-  axios.put('/swapTodos', { revision, values: newInbox, listId })
+  return axios.put('/swapTodos', { revision, values: newInbox, listId })
     .then(json => dispatch({
       type: types.SWAP_TODOS,
       revision: json.data.revision,
@@ -58,7 +58,7 @@ export const toggleCompletedTodos = () => ({
 
 export const uncompleteTodo = ({ id, revision })  => dispatch => {
   dispatch(requestTodoUpdate(id));
-  axios.put(`/todos/${id}`, { revision, data: { completed: false } })
+  return axios.put(`/todos/${id}`, { revision, data: { completed: false } })
     .then(json => dispatch({
       type: types.UNCOMPLETE_TODO,
       todo: json.data,
