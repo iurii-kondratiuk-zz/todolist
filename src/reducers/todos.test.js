@@ -4,11 +4,14 @@ import * as types from '../constants/ActionTypes';
 describe('todos reducer', () => {
 
   const initialState = {
-    todosById: {},
+    activeListId: null,
     completed: [],
-    inbox: [],
     completedTodosAreVisible: false,
+    inbox: [],
+    todoPositionsRevision: null,
+    todosById: {},
   };
+
 
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
@@ -18,18 +21,20 @@ describe('todos reducer', () => {
     expect(
       reducer(initialState, {
         type: types.ADD_TODO,
-        text: 'my first to-do',
+        todo: {
+          id: 1,
+          title: 'my first to-do',
+        },
       })
     ).toEqual({
       ...initialState,
       todosById: {
-        0: {
-          text: 'my first to-do',
-          completed: false,
-          id: 0
+        1: {
+          title: 'my first to-do',
+          id: 1
         }
       },
-      inbox: [0],
+      inbox: [1],
     });
   });
 
@@ -37,46 +42,84 @@ describe('todos reducer', () => {
     const todo = { id: 1, text: 'to-do' };
     const state = {
       ...initialState,
-      todosById: {
-        1: { id: 1, text: 'to-do' }
-      },
+      todosById: { 1: todo },
       inbox: [1],
     };
     
     expect(
       reducer(state, {
         type: types.COMPLETE_TODO,
-        id: 1,
+        todo: { ...todo, completed: true },
       })
     ).toEqual({
       ...initialState,
       todosById: {
-        1: { id: 1, text: 'to-do', completed: true }
+        1: { ...todo, completed: true },
       },
       completed: [1],
       inbox: [],
     });
   });
 
+  it('should handle RECEIVE_TODOS action for completed to-dos', () => {
+    expect(
+      reducer(initialState, {
+        type: types.RECEIVE_TODOS,
+        completed: true,
+        listId: 1,
+        todos: [{ id: 1 }, { id: 2 }],
+      })
+    ).toEqual({
+      ...initialState,
+      activeListId: 1,
+      completed: [1, 2],
+      todosById: {
+        1: { id: 1 },
+        2: { id: 2 },
+      },
+    });
+  });
+
+  it('should handle RECEIVE_TODOS action for uncompleted to-dos', () => {
+    expect(
+      reducer(initialState, {
+        type: types.RECEIVE_TODOS,
+        listId: 1,
+        todoPositions: {
+          revision: 1,
+          values: [2, 1],
+        },
+        todos: [{ id: 1 }, { id: 2 }],
+      })
+    ).toEqual({
+      ...initialState,
+      activeListId: 1,
+      inbox: [2, 1],
+      todoPositionsRevision: 1,
+      todosById: {
+        1: { id: 1 },
+        2: { id: 2 },
+      },
+    });
+  });
+
   it('should handle UNCOMPLETE_TODO action', () => {
-    const todo = { id: 1, text: 'to-do' };
+    const todo = { id: 1, text: 'to-do', completed: true };
     const state = {
       ...initialState,
-      todosById: {
-        1: { id: 1, text: 'to-do' }
-      },
+      todosById: { 1: todo },
       completed: [1],
     };
     
     expect(
       reducer(state, {
         type: types.UNCOMPLETE_TODO,
-        id: 1,
+        todo,
       })
     ).toEqual({
       ...initialState,
       todosById: {
-        1: { id: 1, text: 'to-do', completed: false }
+        1: { ...todo },
       },
       completed: [],
       inbox: [1],
@@ -96,17 +139,19 @@ describe('todos reducer', () => {
     const state = {
       ...initialState,
       inbox: [1, 2],
+      todoPositionsRevision: 0,
     };
     
     expect(
       reducer(state, {
         type: types.SWAP_TODOS,
-        oldIndex: 0,
-        newIndex: 1,
+        revision: 1,
+        values: [2, 1],
       })
     ).toEqual({
       ...initialState,
       inbox: [2, 1],
+      todoPositionsRevision: 1,
     });
   });
 });

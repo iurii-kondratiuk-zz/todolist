@@ -9,8 +9,6 @@ const initialState = {
   todosById: {},
 };
 
-let latestTodoId = 0;
-
 export default function todos(state = initialState, action) {
 
   switch(action.type) {
