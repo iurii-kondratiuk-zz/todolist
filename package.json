@@ -42,8 +42,9 @@
   },
   "scripts": {
     "build": "webpack",
-    "start": "webpack --watch",
+    "start": "node server.js",
     "test": "jest --env=jsdom",
+    "watch:build": "webpack --watch",
     "watch:test": "jest --env=jsdom --watch"
   },
   "jest": {
