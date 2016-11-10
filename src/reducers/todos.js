@@ -1,11 +1,11 @@
 import * as types from '../constants/ActionTypes';
-import { arrayMove } from 'react-sortable-hoc';
 
 const initialState = {
   activeListId: null,
   completed: [],
   completedTodosAreVisible: false,
   inbox: [],
+  todoPositionsRevision: null,
   todosById: {},
 };
 
@@ -37,15 +37,17 @@ export default function todos(state = initialState, action) {
       }
 
     case types.RECEIVE_TODOS:
-      const { listId, todos } = action.todos;
-      const ids = todos.map(todo => todo.id);
+      const { completed, listId, todoPositions, todos } = action;
+
+      const ids = completed ? todos.map(todo => todo.id) : todoPositions.values;
       const todosById = todos.reduce((acc, todo) =>  ({ ...acc, [todo.id]: todo }), {});
-      const todosType = action.completed ? 'completed' : 'inbox';
+      const todosType = completed ? 'completed' : 'inbox';
 
       return {
         ...state,
         activeListId: listId,
         [todosType]: ids,
+        ...(completed ? {} : { todoPositionsRevision: todoPositions.revision }),
         todosById: {
           ...state.todosById,
           ...todosById,
@@ -70,9 +72,11 @@ export default function todos(state = initialState, action) {
       }
 
     case types.SWAP_TODOS:
+      const { revision, values } = action;
       return {
         ...state,
-        inbox: arrayMove(state.inbox, action.oldIndex, action.newIndex),
+        inbox: values,
+        todoPositionsRevision: revision,
       }
 
     default:

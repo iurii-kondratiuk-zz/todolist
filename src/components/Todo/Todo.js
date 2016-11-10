@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import Checkbox from '../Checkbox';
 
-const Todo = ({ onComplete, inProcess, todo }) => (
+const Todo = ({ inProcess, onComplete, todo }) => (
   <li className={classnames('Todo', { 'Todo--completed': todo.completed })}>
   	{
   		inProcess
@@ -20,6 +20,7 @@ const Todo = ({ onComplete, inProcess, todo }) => (
 );
 
 Todo.propTypes = {
+  inProcess: PropTypes.bool,
   onComplete: PropTypes.func,
   todo: PropTypes.object,
 };

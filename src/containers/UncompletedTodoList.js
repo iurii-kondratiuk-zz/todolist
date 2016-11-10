@@ -22,6 +22,10 @@ class UnompletedTodoList extends React.Component {
   }
 
   onComplete = todo => this.props.actions.completeTodo(todo);
+  onSwap = indexes => {
+    const { actions, activeListId, inbox, todoPositionsRevision } = this.props;
+    actions.swapTodos(inbox, activeListId, todoPositionsRevision, indexes);
+  }
 
   render() {
     const { actions, isFetching, todoInProcess, todos } = this.props;
@@ -29,7 +33,7 @@ class UnompletedTodoList extends React.Component {
     return (
       <SortableTodoList
         isFetching={isFetching}
-        onSort={actions.swapTodos}
+        onSort={this.onSwap}
       >
         {
           todos.map((todo, index) => (
@@ -47,10 +51,13 @@ class UnompletedTodoList extends React.Component {
   }
 };
 
-const mapStateToProps = state => ({
-  todos: getTodos(state.todos, 'inbox'),
-  isFetching: state.fetching.inbox,
-  todoInProcess: state.fetching.todo,
+const mapStateToProps = ({ fetching, todos }) => ({
+  activeListId: todos.activeListId,
+  inbox: todos.inbox,
+  isFetching: fetching.inbox,
+  todos: getTodos(todos, 'inbox'),
+  todoInProcess: fetching.todo,
+  todoPositionsRevision: todos.todoPositionsRevision,
 });
 
 const mapDispatchToProps = dispatch => ({

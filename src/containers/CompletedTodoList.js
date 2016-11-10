@@ -25,11 +25,8 @@ class CompletedTodoList extends React.Component {
 
   render() {
     const { actions, isFetching, showTodos, todoInProcess, todos } = this.props;
-    const buttonLabel = isFetching
-      ? 'LOADING'
-      : !!todos.length && showTodos
-        ? 'HIDE'
-        : 'SHOW';
+    let buttonLabel = !!todos.length && showTodos ? 'HIDE' : 'SHOW';
+    buttonLabel = isFetching ? 'LOADING' : buttonLabel;
 
     return (
       <div>
