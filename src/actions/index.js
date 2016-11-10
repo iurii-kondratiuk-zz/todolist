@@ -49,6 +49,11 @@ export const swapTodos = (inbox, listId, revision, { newIndex, oldIndex }) => di
       type: types.SWAP_TODOS,
       revision: json.data.revision,
       values: json.data.values,
+    }))
+    .catch(() => dispatch({ // revert optimistic update
+      type: types.SWAP_TODOS,
+      revision,
+      values: inbox,
     }));  
 };
 

@@ -1,11 +1,11 @@
-const path = require('path');
-const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
+const express = require('express');
+const path = require('path');
+const Promise = require("bluebird");
 const rp = require('request-promise');
 const serverStatic = require('serve-static');
-const Promise = require("bluebird");
+const session = require('express-session');
 const WunderlistSDK = require('wunderlist');
 
 let wunderlistAPI = null;
@@ -73,6 +73,24 @@ const loadTodosPositions = lisdId => {
   });
 }
 
+const loadListTasks = (listId, completed) => {
+  let promises = [loadTodos(listId, completed)];
+  promises = !completed ? [...promises, loadTodosPositions(listId)] : promises;
+  return Promise.all(promises);
+};
+
+const isInbox = list => list.title === 'inbox';
+const identityResponse = res => response => res.status(200).send(response);
+const respondWithError = (res, error) => () => res.status(400).send({ error });
+
+const respondWithTodos = (res, listId) => ([todos, todoPositions]) => {
+  res.status(200).send({
+    listId,
+    todos,
+    todoPositions: todoPositions ? todoPositions[0] : null,
+  });
+};
+
 app.use((req, res, next) => {
   const { state, code } = req.query;
   if (req.session.accessToken) return next();
@@ -90,39 +108,34 @@ app.get('/', (req, res) => {
 app.get('/todos', (req, res) => {
   loadLists()
     .done(lists => {
-      const inbox = lists.find((list) => list.title === 'inbox');
-      Promise.all([
-        loadTodos(inbox.id, req.query.completed === 'true'),
-        req.query.completed ? loadTodosPositions(inbox.id) : undefined,
-      ])
-      .then(([ todos, todoPositions ]) => {
-        res.status(200).send({ listId: inbox.id, todoPositions: todoPositions[0], todos });
-      })
-      .catch(() => res.status(400).send({ error: 'there was a problem with loading todos' }));
+      const inbox = lists.find(isInbox);
+      loadListTasks(inbox.id, JSON.parse(req.query.completed))
+        .then(respondWithTodos(res, inbox.id))
+        .catch(respondWithError(res, 'there was a problem with loading todos'));
     })
-    .fail(() => res.status(400).send({ error: 'there was a problem with loading lists' }));
+    .fail(respondWithError(res, 'there was a problem with loading lists'));
 });
 
 app.post('/todos', (req, res) => {
   const { listId, title } = req.body;
   createTodo(listId, title)
-    .done(todo => res.status(200).send(todo))
-    .fail(() => res.status(400).send({ error: 'there was a problem with creating a todo' }));
+    .done(identityResponse(res))
+    .fail(respondWithError(res, 'there was a problem with creating a todo'));
 });
 
 app.put('/todos/:todoId', (req, res) => {
   updateTodo(req.params.todoId, req.body)
-    .done(todo => res.status(200).send(todo))
-    .fail(() => res.status(400).send({ error: 'there was a problem with updating a todo' }));
+    .done(identityResponse(res))
+    .fail(respondWithError(res, 'there was a problem with updating a todo'));
 });
 
 app.put('/swapTodos', (req, res) => {
   const { revision, values, listId } = req.body;
   updateTodoPositions(listId, revision, values)
-    .then(todoPositions => res.status(200).send(todoPositions))
-    .catch(() => res.status(400).send({ error: 'there was a problem with updating a todo positions' }));
+    .then(identityResponse(res))
+    .catch(respondWithError(res, 'there was a problem with updating a todo positions'));
 });
 
 app.listen(3000, () => {
-  console.log('Example app listening on port 3000!');
+  console.log('Example app listening on port 3000: http://localhost:3000');
 });

@@ -1,4 +1,5 @@
 import * as types from '../constants/ActionTypes';
+import { filterWith } from '../utils';
 
 const initialState = {
   activeListId: null,
@@ -37,7 +38,10 @@ export default function todos(state = initialState, action) {
     case types.RECEIVE_TODOS:
       const { completed, listId, todoPositions, todos } = action;
 
-      const ids = completed ? todos.map(todo => todo.id) : todoPositions.values;
+      let ids = todos.map(todo => todo.id);
+      // make sure that we have correct to-dos in positions
+      ids = todoPositions ? filterWith(todoPositions.values, ids) : ids; 
+
       const todosById = todos.reduce((acc, todo) =>  ({ ...acc, [todo.id]: todo }), {});
       const todosType = completed ? 'completed' : 'inbox';
 
