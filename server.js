@@ -81,7 +81,21 @@ const loadListTasks = (listId, completed) => {
 
 const isInbox = list => list.title === 'inbox';
 const identityResponse = res => response => res.status(200).send(response);
-const respondWithError = (res, error) => () => res.status(400).send({ error });
+const respondWithError = (res, error) => (err) => res.status(400).send({ error, err });
+const respondWithTodoAndPositions = todo => todoPositions => res.status(200).send({ todo, todoPositions });
+
+const respondWithTodoAndNewPositions = (res, listPositions, addToList) => todo => {
+  const { listId, positions, positionsRevision } = listPositions;
+  const newPositions = addToList ? [...positions, todo.id] : positions.filter(id => id !== todo.id);
+  if (newPositions.length) {
+    updateTodoPositions(listId, positionsRevision, newPositions)
+      .then(respondWithTodoAndPositions(todo))
+      .catch(respondWithError(res, 'there was a problem with updating a todo positions'));
+  } else {
+    // /task_positions enpoint respond with error if pass it an empty values array
+    identityResponse(res)({ todo, todoPositions: { revision: positionsRevision, values: [] } });
+  }
+}
 
 const respondWithTodos = (res, listId) => ([todos, todoPositions]) => {
   res.status(200).send({
@@ -117,19 +131,24 @@ app.get('/todos', (req, res) => {
 });
 
 app.post('/todos', (req, res) => {
-  const { listId, title } = req.body;
+  const { listId, title, positions, positionsRevision } = req.body;
   createTodo(listId, title)
-    .done(identityResponse(res))
+    .done(todo => {
+      updateTodoPositions(listId, positionsRevision, [todo.id, ...positions])
+        .then(todoPositions => res.status(200).send({ todo, todoPositions }))
+        .catch(respondWithError(res, 'there was a problem with updating a todo positions'));
+    })
     .fail(respondWithError(res, 'there was a problem with creating a todo'));
 });
 
 app.put('/todos/:todoId', (req, res) => {
-  updateTodo(req.params.todoId, req.body)
-    .done(identityResponse(res))
+  const { data, revision, listPositions } = req.body;
+  updateTodo(req.params.todoId, { data, revision })
+    .done(respondWithTodoAndNewPositions(res, listPositions, !data.completed))
     .fail(respondWithError(res, 'there was a problem with updating a todo'));
 });
 
-app.put('/swapTodos', (req, res) => {
+app.put('/todoPositions', (req, res) => {
   const { revision, values, listId } = req.body;
   updateTodoPositions(listId, revision, values)
     .then(identityResponse(res))

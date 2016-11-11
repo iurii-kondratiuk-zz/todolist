@@ -21,7 +21,10 @@ class CompletedTodoList extends React.Component {
     this.props.actions.fetchTodos({ completed: true });
   }
 
-  onUncomplete = todo => this.props.actions.uncompleteTodo(todo);
+  onUncomplete = todo => {
+    const { actions, activeListId, inbox, todoPositionsRevision } = this.props;
+    actions.uncompleteTodo(todo, activeListId, inbox, todoPositionsRevision);
+  }
 
   render() {
     const { actions, isFetching, showTodos, todoInProcess, todos } = this.props;
@@ -58,10 +61,13 @@ class CompletedTodoList extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  todos: getTodos(state.todos, 'completed'),
-  showTodos: state.todos.completedTodosAreVisible,
+  activeListId: state.todos.activeListId,
+  inbox: state.todos.inbox,
   isFetching: state.fetching.completed,
+  showTodos: state.todos.completedTodosAreVisible,
   todoInProcess: state.fetching.todo,
+  todos: getTodos(state.todos, 'completed'),
+  todoPositionsRevision: state.todos.todoPositionsRevision,
 });
 
 const mapDispatchToProps = dispatch => ({

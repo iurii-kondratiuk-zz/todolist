@@ -13,8 +13,8 @@ class TodoInput extends React.Component {
   }
 
   onSave = title => {
-    const { actions, listId } = this.props;
-    actions.addTodo(listId, title);
+    const { actions, listId, positions, positionsRevision } = this.props;
+    actions.addTodo(listId, title, positions, positionsRevision);
   }
 
   render() {
@@ -29,6 +29,8 @@ class TodoInput extends React.Component {
 
 const mapStateToProps = state => ({
   listId: state.todos.activeListId,
+  positions: state.todos.inbox,
+  positionsRevision: state.todos.todoPositionsRevision,
 });
 
 const mapDispatchToProps = dispatch => ({

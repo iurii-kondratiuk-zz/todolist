@@ -11,7 +11,6 @@ const initialState = {
 };
 
 export default function todos(state = initialState, action) {
-
   switch(action.type) {
 
     case types.ADD_TODO:
@@ -21,7 +20,8 @@ export default function todos(state = initialState, action) {
           ...state.todosById,
           [action.todo.id]: action.todo,
         },
-        inbox: [action.todo.id, ...state.inbox],
+        inbox: action.todoPositions.values,
+        todoPositionsRevision: action.todoPositions.revision,
       }
 
     case types.COMPLETE_TODO:
@@ -32,7 +32,8 @@ export default function todos(state = initialState, action) {
           [action.todo.id]: action.todo,
         },
         completed: [action.todo.id, ...state.completed],
-        inbox: state.inbox.filter(id => id !== action.todo.id)
+        inbox: action.todoPositions.values,
+        todoPositionsRevision: action.todoPositions.revision,
       }
 
     case types.RECEIVE_TODOS:
@@ -40,7 +41,7 @@ export default function todos(state = initialState, action) {
 
       let ids = todos.map(todo => todo.id);
       // make sure that we have correct to-dos in positions
-      ids = todoPositions ? filterWith(todoPositions.values, ids) : ids; 
+      ids = todoPositions ? filterWith(todoPositions.values, ids) : ids;
 
       const todosById = todos.reduce((acc, todo) =>  ({ ...acc, [todo.id]: todo }), {});
       const todosType = completed ? 'completed' : 'inbox';
@@ -56,6 +57,12 @@ export default function todos(state = initialState, action) {
         },
       };
 
+    case types.TOGGLE_COMPLETED_TODOS:
+      return {
+        ...state,
+        completedTodosAreVisible: !state.completedTodosAreVisible,
+      }
+
     case types.UNCOMPLETE_TODO:
       return {
         ...state,
@@ -63,17 +70,12 @@ export default function todos(state = initialState, action) {
           ...state.todosById,
           [action.todo.id]: action.todo,
         },
-        inbox: [...state.inbox, action.todo.id],
+        inbox: action.todoPositions.values,
+        todoPositionsRevision: action.todoPositions.revision,
         completed: state.completed.filter(id => id !== action.todo.id)
       }
 
-    case types.TOGGLE_COMPLETED_TODOS:
-      return {
-        ...state,
-        completedTodosAreVisible: !state.completedTodosAreVisible,
-      }
-
-    case types.SWAP_TODOS:
+    case types.UPDATE_TODO_POSITIONS:
       const { revision, values } = action;
       return {
         ...state,

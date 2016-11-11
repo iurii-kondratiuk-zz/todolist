@@ -25,6 +25,7 @@ describe('todos reducer', () => {
           id: 1,
           title: 'my first to-do',
         },
+        todoPositions: { revision: 1, values: [1]},
       })
     ).toEqual({
       ...initialState,
@@ -35,6 +36,7 @@ describe('todos reducer', () => {
         }
       },
       inbox: [1],
+      todoPositionsRevision: 1,
     });
   });
 
@@ -50,6 +52,7 @@ describe('todos reducer', () => {
       reducer(state, {
         type: types.COMPLETE_TODO,
         todo: { ...todo, completed: true },
+        todoPositions: { revision: 1, values: []},
       })
     ).toEqual({
       ...initialState,
@@ -58,6 +61,7 @@ describe('todos reducer', () => {
       },
       completed: [1],
       inbox: [],
+      todoPositionsRevision: 1,
     });
   });
 
@@ -115,6 +119,7 @@ describe('todos reducer', () => {
       reducer(state, {
         type: types.UNCOMPLETE_TODO,
         todo,
+        todoPositions: { revision: 1, values: [1]},
       })
     ).toEqual({
       ...initialState,
@@ -123,6 +128,7 @@ describe('todos reducer', () => {
       },
       completed: [],
       inbox: [1],
+      todoPositionsRevision: 1,
     });
   });
 
@@ -135,7 +141,7 @@ describe('todos reducer', () => {
     });
   });
 
-  it('should handle SWAP_TODOS action', () => {
+  it('should handle UPDATE_TODO_POSITIONS action', () => {
     const state = {
       ...initialState,
       inbox: [1, 2],
@@ -144,7 +150,7 @@ describe('todos reducer', () => {
     
     expect(
       reducer(state, {
-        type: types.SWAP_TODOS,
+        type: types.UPDATE_TODO_POSITIONS,
         revision: 1,
         values: [2, 1],
       })

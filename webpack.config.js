@@ -31,5 +31,5 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
   ],
 
-  devtool: 'cheap-module-source-map',
+  devtool: 'cheap-source-map',
 };

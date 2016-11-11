@@ -46,13 +46,17 @@
   "scripts": {
     "build": "webpack",
     "start": "node server.js",
-    "test": "jest --env=jsdom",
+    "test": "jest",
     "watch:build": "webpack --watch",
-    "watch:test": "jest --env=jsdom --watch"
+    "watch:test": "npm test -- --watch"
   },
   "jest": {
     "moduleNameMapper": {
       "\\.(scss)$": "<rootDir>/__mocks__/styleMock.js"
-    }
+    },
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/redux-mock-store",
+      "<rootDir>/node_modules/redux-thunk"
+    ]
   }
 }

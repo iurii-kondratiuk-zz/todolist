@@ -5,8 +5,8 @@ import nock from 'nock';
 import * as TodoActions from '../actions';
 import * as types from '../constants/ActionTypes';
 
-const middlewares = [ thunk ]
-const mockStore = configureMockStore(middlewares)
+const middlewares = [ thunk ];
+const mockStore = configureMockStore(middlewares);
 
 describe('actions', () => {
 
@@ -17,13 +17,11 @@ describe('actions', () => {
       const mockData = {
         todos: [{ title: 'new to-do' }],
         listId: 1,
-        todoPositions: { values: [1] },
+        todoPositions: { revision: 1, values: [1] },
       };
-      nock('http://localhost:3000/')
-        .get('/todos')
-        .reply(200, mockData);
+      nock('http://localhost:3000').get('/todos').reply(200, mockData);
 
-      const store = mockStore({ });
+      const store = mockStore({});
       const expectedActions = [
         { type: types.REQUEST_TODOS, completed: true },
         { type: types.RECEIVE_TODOS, ...mockData }
@@ -36,62 +34,60 @@ describe('actions', () => {
     });
 
     it('should create an action to add a to-do', () => {
-      nock('http://localhost:3000/')
-        .post('/todos')
-        .reply(200, { title: 'new to-do' });
+      const mockData = {
+        todo: { title: 'new to-do' },
+        todoPositions: { revision: 1, values: [1] },
+      };
+      nock('http://localhost:3000').post('/todos').reply(200, mockData);
 
-      const store = mockStore({ });
-      const expectedActions = [{ type: types.ADD_TODO, todo: { title: 'new to-do' } }];
+      const store = mockStore({});
+      const expectedActions = [{ type: types.ADD_TODO, ...mockData }];
 
-      store.dispatch(TodoActions.addTodo(1, 'new to-do'))
-        .then(() => {
-          expect(store.getActions()).toEqual(expectedActions);
-        });
+      store.dispatch(TodoActions.addTodo(1, 'new to-do', [], 0))
+        .then(() => expect(store.getActions()).toEqual({}));
     });
 
     it('should create an action to complete a to-do', () => {
-      const responseTodo = { title: 'new to-do', completed: true }; 
-      nock('http://localhost:3000/')
-        .put('/todos/1')
-        .reply(200, responseTodo);
+      const mockData = {
+        todo: { id: 1, title: 'new to-do', completed: true },
+        todoPositions: { revision: 3, values: [] },
+      };
+      nock('http://localhost:3000').put('/todos/1').reply(200, mockData);
 
-      const store = mockStore({ });
-      const expectedActions = [
-        { type: types.COMPLETE_TODO, todo: responseTodo }
-      ];
+      const store = mockStore({});
+      const expectedActions = [{ type: types.COMPLETE_TODO, ...mockData }];
 
-      store.dispatch(TodoActions.completeTodo({ id: 1, revision: 0 }))
+      store.dispatch(TodoActions.completeTodo({ id: 1, revision: 0 }, 1, [1], 2))
         .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         });
     });
 
     it('should create an action to uncomplete a to-do', () => {
-      const responseTodo = { title: 'new to-do', completed: true }; 
-      nock('http://localhost:3000/')
-        .put('/todos/1')
-        .reply(200, responseTodo);
+      const mockData = {
+        todo: { id: 1, title: 'new to-do', completed: true },
+        todoPositions: { revision: 3, values: [1] }
+      };
+      nock('http://localhost:3000').put('/todos/1').reply(200, mockData);
 
-      const store = mockStore({ });
-      const expectedActions = [
-        { type: types.UNCOMPLETE_TODO, todo: responseTodo }
-      ];
+      const store = mockStore({});
+      const expectedActions = [{ type: types.UNCOMPLETE_TODO, ...mockData }];
 
-      store.dispatch(TodoActions.uncompleteTodo({ id: 1, revision: 0 }))
+      store.dispatch(TodoActions.uncompleteTodo({ id: 1, revision: 0 }, 1, [], 2))
         .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         });
     });
 
     it('should create an action to swap to-dos', () => {
-      nock('http://localhost:3000/')
-        .put('/swapTodos')
+      nock('http://localhost:3000')
+        .put('/todoPositions')
         .reply(200, { data: { revision: 1, values: [1, 2] }});
 
-      const store = mockStore({ });
+      const store = mockStore({});
       const expectedActions = [
-        { type: types.SWAP_TODOS, revision: 1, values: [1, 2] },
-        { type: types.SWAP_TODOS, revision: 1, values: [1, 2] },
+        { type: types.UPDATE_TODO_POSITIONS, revision: 1, values: [1, 2] },
+        { type: types.UPDATE_TODO_POSITIONS, revision: 1, values: [1, 2] },
       ];
 
       store.dispatch(TodoActions.swapTodos([2, 1], 123, 0, { newIndex: 1, oldIndex: 0 }))

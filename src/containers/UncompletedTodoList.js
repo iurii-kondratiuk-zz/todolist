@@ -21,7 +21,11 @@ class UnompletedTodoList extends React.Component {
     this.props.actions.fetchTodos({ completed: false });
   }
 
-  onComplete = todo => this.props.actions.completeTodo(todo);
+  onComplete = todo => {
+    const { actions, activeListId, inbox, todoPositionsRevision } = this.props;
+    actions.completeTodo(todo, activeListId, inbox, todoPositionsRevision);
+  }
+  
   onSwap = indexes => {
     const { actions, activeListId, inbox, todoPositionsRevision } = this.props;
     actions.swapTodos(inbox, activeListId, todoPositionsRevision, indexes);
