@@ -5,10 +5,10 @@ import * as types from '../constants/ActionTypes';
 
 export const addTodo = (listId, title, positions, positionsRevision)  => dispatch => {
   return axios.post('/todos', { listId, title, positions, positionsRevision })
-    .then(json => (console.log(json), dispatch({
+    .then(json => dispatch({
       type: types.ADD_TODO,
       ...json.data,
-    })));
+    }));
 };
 
 export const completeTodo = ({ id, revision }, listId, positions, positionsRevision)  => dispatch => {

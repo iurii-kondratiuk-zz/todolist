@@ -46,7 +46,7 @@ app.get('/todos', (req, res) => {
       const inbox = lists.find(isInbox);
       loadListTasks(inbox.id, JSON.parse(req.query.completed))
         .then(respondWithTodos(res, inbox.id))
-        .catch(respondWithError(res, 'there was a problem with loading todos'));
+        .catch(respondWithError(res, 'there was a problem with loading to-dos'));
     })
     .fail(respondWithError(res, 'there was a problem with loading lists'));
 });
@@ -57,23 +57,23 @@ app.post('/todos', (req, res) => {
     .done(todo => {
       updateTodoPositions(listId, positionsRevision, [todo.id, ...positions])
         .then(todoPositions => res.status(200).send({ todo, todoPositions }))
-        .catch(respondWithError(res, 'there was a problem with updating a todo positions'));
+        .catch(respondWithError(res, 'there was a problem with updating a to-do positions'));
     })
-    .fail(respondWithError(res, 'there was a problem with creating a todo'));
+    .fail(respondWithError(res, 'there was a problem with creating a to-do'));
 });
 
 app.put('/todos/:todoId', (req, res) => {
   const { data, revision, listPositions } = req.body;
   updateTodo(req.params.todoId, { data, revision })
     .done(respondWithTodoAndNewPositions(res, listPositions, !data.completed))
-    .fail(respondWithError(res, 'there was a problem with updating a todo'));
+    .fail(respondWithError(res, 'there was a problem with updating a to-do'));
 });
 
 app.put('/todoPositions', (req, res) => {
   const { revision, values, listId } = req.body;
   updateTodoPositions(listId, revision, values)
     .then(identityResponse(res))
-    .catch(respondWithError(res, 'there was a problem with updating a todo positions'));
+    .catch(respondWithError(res, 'there was a problem with updating a to-do positions'));
 });
 
 app.listen(3000, () => {
